@@ -41,7 +41,7 @@
             class="inline-flex items-center px-3 py-1.5 rounded-md bg-cyber-primary/20 text-cyber-primary text-xs font-medium backdrop-blur-md border border-cyber-primary/30 hover:bg-cyber-primary/30 transition-all duration-200 transform hover:scale-105 shadow-lg"
           >
             <vue-feather type="edit-2" class="w-3 h-3 mr-1.5" />
-            Edit
+            Editer
           </NuxtLink>
         </div>
       </div>
@@ -110,7 +110,7 @@
         <div v-if="project.project_tech_stack?.length" class="mt-6 pt-4 border-t border-cyber-primary/10 flex-none">
           <h4 class="text-sm font-medium text-gray-300 mb-2 flex items-center">
             <vue-feather type="code" class="w-4 h-4 mr-2 text-cyber-primary/70" />
-            Technology
+            Technologie
           </h4>
           <div class="flex flex-wrap gap-2">         
 

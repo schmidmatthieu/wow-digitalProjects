@@ -1,13 +1,13 @@
 <template>
   <div class="max-w-4xl mx-auto">
     <div class="bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20 p-8">
-      <h1 class="text-2xl font-bold text-white mb-8">Create New Project</h1>
+      <h1 class="text-2xl font-bold text-white mb-8">Créer un nouveau projet</h1>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
         <!-- Basic Information -->
         <div class="space-y-4">
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-300">Project Name</label>
+            <label for="name" class="block text-sm font-medium text-gray-300">Nom du projet</label>
             <input
               id="name"
               v-model="form.name"
@@ -110,7 +110,7 @@
                     @click="removeThumbnail"
                     class="text-sm text-red-400 hover:text-red-300"
                   >
-                    Remove image
+                    Effacer l'image
                   </button>
                 </div>
               </div>
@@ -118,18 +118,18 @@
           </div>
 
           <div>
-            <label for="status" class="block text-sm font-medium text-gray-300">Status</label>
+            <label for="status" class="block text-sm font-medium text-gray-300">Statut</label>
             <select
               id="status"
               v-model="form.status"
               required
               class="mt-1 block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
             >
-              <option value="in_development">In Development</option>
-              <option value="in_maintenance">In Maintenance</option>
-              <option value="in_production">In Production</option>
-              <option value="upcoming">Upcoming</option>
-              <option value="archived">Archived</option>
+              <option value="in_development">En Development</option>
+              <option value="in_maintenance">En Maintenance</option>
+              <option value="in_production">En Production</option>
+              <option value="upcoming">A venir</option>
+              <option value="archived">Archivé</option>
             </select>
           </div>
         </div>
@@ -174,7 +174,7 @@
             to="/"
             class="px-6 py-3 rounded-lg border border-cyber-primary/20 text-cyber-primary hover:bg-cyber-primary/10"
           >
-            Cancel
+            Annuler
           </NuxtLink>
           <button
             type="submit"

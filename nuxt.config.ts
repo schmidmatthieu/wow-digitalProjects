@@ -4,8 +4,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
     '@nuxtjs/google-fonts',
-    '@nuxtjs/supabase',
-    '@nuxtjs/i18n'
+    '@nuxtjs/supabase'
   ],
   
   supabase: {
@@ -21,33 +20,6 @@ export default defineNuxtConfig({
       sameSite: 'lax',
       secure: true
     }
-  },
-
-  i18n: {
-    baseUrl: 'http://localhost:3000',
-    defaultLocale: 'fr',
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root',
-    },
-    langDir: 'locales',
-    locales: [
-      {
-        code: 'fr',
-        iso: 'fr-FR',
-        name: 'Français',
-        file: 'fr.json'
-      },
-      {
-        code: 'en',
-        iso: 'en-US',
-        name: 'English',
-        file: 'en.json'
-      }
-    ],
-    strategy: 'prefix_except_default',
-    vueI18n: './i18n.config.ts'
   },
   
   colorMode: {
@@ -69,7 +41,7 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'layout', mode: 'out-in' },
     head: {
       htmlAttrs: {
-        lang: 'fr'
+        lang: 'en'
       }
     }
   },

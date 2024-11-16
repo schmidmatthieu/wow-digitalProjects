@@ -1,7 +1,7 @@
 <template>
   <div>
     <label class="block text-sm font-medium text-gray-300 mb-2">
-      Status
+      Statut
     </label>
     <div class="flex flex-wrap gap-2">
       <button

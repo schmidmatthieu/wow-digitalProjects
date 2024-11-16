@@ -3,16 +3,16 @@
     <div class="max-w-md w-full space-y-8 p-8 bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20">
       <div>
         <h2 class="mt-6 text-center text-3xl font-bold text-white">
-          Admin Sign In
+          Connexion de l'administrateur
         </h2>
         <p class="mt-2 text-center text-sm text-gray-400">
-          Sign in with your admin credentials to manage projects
+          Connectez-vous avec vos identifiants d'administrateur pour gérer les projets.
         </p>
       </div>
       <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
         <div class="rounded-md shadow-sm space-y-4">
           <div>
-            <label for="email" class="sr-only">Email address</label>
+            <label for="email" class="sr-only">Adresse email </label>
             <input
               id="email"
               v-model="email"
@@ -24,7 +24,7 @@
             />
           </div>
           <div>
-            <label for="password" class="sr-only">Password</label>
+            <label for="password" class="sr-only">Mot de passe</label>
             <input
               id="password"
               v-model="password"
@@ -61,7 +61,7 @@
             to="/"
             class="text-sm text-cyber-primary hover:text-cyber-primary/80"
           >
-            ← Back to projects
+            ← Retour aux projets
           </NuxtLink>
         </div>
       </form>

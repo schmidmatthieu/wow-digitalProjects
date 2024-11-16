@@ -3,15 +3,16 @@
     <div class="max-w-md w-full space-y-8 p-8 bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20">
       <div>
         <h2 class="mt-6 text-center text-3xl font-bold text-white">
-          Enter Access Password
+          Entrer le mot de passe
         </h2>
         <p class="mt-2 text-center text-sm text-gray-400">
-          Please enter the access password to view projects
+          Veuillez saisir le mot de passe d'accès pour visualiser les projets
+
         </p>
       </div>
       <form class="mt-8 space-y-6" @submit.prevent="handlePasswordSubmit">
         <div>
-          <label for="password" class="sr-only">Password</label>
+          <label for="password" class="sr-only">Mot de passe</label>
           <input
             id="password"
             v-model="password"
@@ -34,7 +35,7 @@
 
         <div v-if="error" class="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
           <p class="text-red-400 text-sm text-center">
-            The password you entered is incorrect. Please try again.
+            Le mot de passe que vous avez saisi est incorrect. Veuillez réessayer.
           </p>
         </div>
       </form>

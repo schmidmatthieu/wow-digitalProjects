@@ -1,7 +1,7 @@
 <template>
   <div>
     <label for="search" class="block text-sm font-medium text-gray-300">
-      Search Projects
+      Rechercher des projets
     </label>
     <div class="relative mt-2">
       <div class="relative">

@@ -1,13 +1,13 @@
 <template>
   <div v-if="hasActiveFilters" class="border-t border-cyber-primary/10 pt-4">
     <div class="flex items-center justify-between mb-2">
-      <span class="text-sm text-gray-400">Active Filters</span>
+      <span class="text-sm text-gray-400">Activer les filtres</span>
       <button
         @click="$emit('clear')"
         class="text-sm text-cyber-primary hover:text-cyber-primary/80 flex items-center"
       >
         <vue-feather type="x" class="w-3 h-3 mr-1" />
-        Clear all
+        Tout effacer
       </button>
     </div>
     <div class="flex flex-wrap gap-2">

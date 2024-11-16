@@ -45,7 +45,7 @@
         class="inline-flex items-center px-4 py-2 rounded-lg bg-cyber-primary/10 text-cyber-primary border border-cyber-primary/20 hover:bg-cyber-primary/20"
       >
         <vue-feather type="plus" class="w-4 h-4 mr-2" />
-        Add
+        Ajouter
       </button>
     </div>
 

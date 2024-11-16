@@ -6,36 +6,36 @@
       </h1>
       <div class="flex items-center gap-4">
         <div class="flex items-center bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20 p-1">
-  <button
-    @click="viewMode = 'grid'"
-    :class="[
-      'p-2 rounded transition-all duration-200 flex items-center justify-center w-10 h-10', // Ajout de dimensions fixes et flexbox
-      viewMode === 'grid' 
-        ? 'bg-cyber-primary text-cyber-black shadow-neon' 
-        : 'text-gray-400 hover:text-cyber-primary'
-    ]"
-  >
-    <vue-feather type="grid" class="w-5 h-5" />
-  </button>
-  <button
-    @click="viewMode = 'list'"
-    :class="[
-      'p-2 rounded transition-all duration-200 flex items-center justify-center w-10 h-10', // Ajout de dimensions fixes et flexbox
-      viewMode === 'list' 
-        ? 'bg-cyber-primary text-cyber-black shadow-neon' 
-        : 'text-gray-400 hover:text-cyber-primary'
-    ]"
-  >
-    <vue-feather type="list" class="w-5 h-5" />
-  </button>
-</div>
+          <button
+            @click="viewMode = 'grid'"
+            :class="[
+              'p-2 rounded transition-all duration-200 flex items-center justify-center w-10 h-10',
+              viewMode === 'grid' 
+                ? 'bg-cyber-primary text-cyber-black shadow-neon' 
+                : 'text-gray-400 hover:text-cyber-primary'
+            ]"
+          >
+            <vue-feather type="grid" class="w-5 h-5" />
+          </button>
+          <button
+            @click="viewMode = 'list'"
+            :class="[
+              'p-2 rounded transition-all duration-200 flex items-center justify-center w-10 h-10',
+              viewMode === 'list' 
+                ? 'bg-cyber-primary text-cyber-black shadow-neon' 
+                : 'text-gray-400 hover:text-cyber-primary'
+            ]"
+          >
+            <vue-feather type="list" class="w-5 h-5" />
+          </button>
+        </div>
         <NuxtLink
           v-if="user"
           to="/projects/new"
           class="inline-flex items-center px-6 py-3 text-sm font-medium rounded-lg bg-cyber-primary text-cyber-black hover:bg-cyber-primary/90 transition-colors duration-200 shadow-neon"
         >
           <vue-feather type="plus" class="w-5 h-5 mr-2" />
-          New Project
+          Nouveau Projet
         </NuxtLink>
       </div>
     </div>
@@ -81,7 +81,7 @@
         class="w-16 h-16 mx-auto mb-4 text-gray-400"
       />
       <h3 class="text-xl font-medium text-gray-300 mb-2">
-        No projects found
+        Pas de projet trouvé
       </h3>
       <p class="text-gray-400">
         {{ user ? 'Create your first project to get started!' : 'No projects match your current filters.' }}
@@ -92,7 +92,7 @@
         class="inline-flex items-center px-6 py-3 mt-6 text-sm font-medium rounded-lg bg-cyber-primary text-cyber-black hover:bg-cyber-primary/90 transition-colors duration-200 shadow-neon"
       >
         <vue-feather type="plus" class="w-5 h-5 mr-2" />
-        Create Project
+        Créer un projet
       </NuxtLink>
     </div>
   </div>

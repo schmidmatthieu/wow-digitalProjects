@@ -1,7 +1,7 @@
 <template>
   <div class="w-56">
     <label class="block text-sm font-medium text-gray-300 mb-2">
-      Sort By
+      Trier par
     </label>
     <div class="flex items-center gap-2">
       <div class="relative flex-1">
@@ -10,9 +10,9 @@
           class="w-full px-4 py-1 pr-12 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent appearance-none"
         >
           <option value="status">Status</option>
-          <option value="created_at">Creation Date</option>
-          <option value="name">Project Name</option>
-          <option value="client">Client Name</option>
+          <option value="created_at">Date de création</option>
+          <option value="name">Nom</option>
+          <option value="client">Client</option>
         </select>
         <vue-feather
           type="chevron-down"
