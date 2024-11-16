@@ -15,7 +15,7 @@
                 : 'text-gray-400 hover:text-cyber-primary'
             ]"
           >
-            <Squares2X2Icon class="w-5 h-5" />
+            <vue-feather type="grid" class="w-5 h-5" />
           </button>
           <button
             @click="viewMode = 'list'"
@@ -26,7 +26,7 @@
                 : 'text-gray-400 hover:text-cyber-primary'
             ]"
           >
-            <ListBulletIcon class="w-5 h-5" />
+            <vue-feather type="list" class="w-5 h-5" />
           </button>
         </div>
         <NuxtLink
@@ -34,14 +34,17 @@
           to="/projects/new"
           class="inline-flex items-center px-6 py-3 text-sm font-medium rounded-lg bg-cyber-primary text-cyber-black hover:bg-cyber-primary/90 transition-colors duration-200 shadow-neon"
         >
-          <PlusIcon class="w-5 h-5 mr-2" />
+          <vue-feather type="plus" class="w-5 h-5 mr-2" />
           New Project
         </NuxtLink>
       </div>
     </div>
 
     <div class="mb-8">
-      <ProjectFilters v-model:filters="filters" />
+      <ProjectFilters
+        v-model:filters="filters"
+        :projects="projects"
+      />
     </div>
 
     <div v-if="loading" class="text-center py-12">
@@ -56,7 +59,7 @@
       v-else
       :class="[
         viewMode === 'grid' 
-          ? 'grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5' 
+          ? 'grid gap-8 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-[1600px] mx-auto' 
           : 'space-y-6'
       ]"
     >
@@ -67,12 +70,36 @@
         :view-mode="viewMode"
       />
     </div>
+
+    <!-- Empty state -->
+    <div 
+      v-if="!loading && !error && filteredProjects.length === 0" 
+      class="text-center py-12"
+    >
+      <vue-feather 
+        type="inbox" 
+        class="w-16 h-16 mx-auto mb-4 text-gray-400"
+      />
+      <h3 class="text-xl font-medium text-gray-300 mb-2">
+        No projects found
+      </h3>
+      <p class="text-gray-400">
+        {{ user ? 'Create your first project to get started!' : 'No projects match your current filters.' }}
+      </p>
+      <NuxtLink
+        v-if="user"
+        to="/projects/new"
+        class="inline-flex items-center px-6 py-3 mt-6 text-sm font-medium rounded-lg bg-cyber-primary text-cyber-black hover:bg-cyber-primary/90 transition-colors duration-200 shadow-neon"
+      >
+        <vue-feather type="plus" class="w-5 h-5 mr-2" />
+        Create Project
+      </NuxtLink>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { PlusIcon, Squares2X2Icon, ListBulletIcon } from '@heroicons/vue/24/outline'
 import type { Project, ProjectFilters as Filters } from '~/types'
 
 definePageMeta({
@@ -89,23 +116,29 @@ const projects = ref<Project[]>([])
 
 const filters = ref<Filters>({
   status: [],
-  type: [],
   search: '',
 })
 
 const filteredProjects = computed(() => {
   return projects.value.filter(project => {
-    const matchesSearch = !filters.value.search || 
-      project.name.toLowerCase().includes(filters.value.search.toLowerCase()) ||
-      project.client?.toLowerCase().includes(filters.value.search.toLowerCase())
+    const searchQuery = filters.value.search.toLowerCase()
+    
+    // Search in project name, client, technologies, and environment URLs
+    const matchesSearch = !searchQuery || 
+      project.name.toLowerCase().includes(searchQuery) ||
+      project.client?.toLowerCase().includes(searchQuery) ||
+      project.project_tech_stack?.some(tech => 
+        tech.technology.toLowerCase().includes(searchQuery)
+      ) ||
+      project.project_environments?.some(env => 
+        env.frontend_url?.toLowerCase().includes(searchQuery) ||
+        env.backend_url?.toLowerCase().includes(searchQuery)
+      )
 
     const matchesStatus = !filters.value.status.length || 
       filters.value.status.includes(project.status)
 
-    const matchesType = !filters.value.type.length || 
-      filters.value.type.includes(project.type)
-
-    return matchesSearch && matchesStatus && matchesType
+    return matchesSearch && matchesStatus
   })
 })
 

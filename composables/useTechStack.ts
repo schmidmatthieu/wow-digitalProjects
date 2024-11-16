@@ -6,6 +6,19 @@ type TechStackInsert = Database['public']['Tables']['project_tech_stack']['Inser
 export const useTechStack = () => {
   const client = useSupabaseClient<Database>()
 
+  const fetchAllTechnologies = async () => {
+    const { data, error } = await client
+      .from('project_tech_stack')
+      .select('technology')
+      .order('technology')
+
+    if (error) throw error
+
+    // Get unique technologies
+    const uniqueTechs = new Set(data.map(tech => tech.technology))
+    return Array.from(uniqueTechs)
+  }
+
   const addTechnology = async (technology: TechStackInsert) => {
     const { data, error } = await client
       .from('project_tech_stack')
@@ -51,6 +64,7 @@ export const useTechStack = () => {
   }
 
   return {
+    fetchAllTechnologies,
     addTechnology,
     removeTechnology,
     updateProjectTechStack

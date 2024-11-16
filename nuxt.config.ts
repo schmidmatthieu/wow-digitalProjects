@@ -15,14 +15,18 @@ export default defineNuxtConfig({
       callback: '/auth/confirm',
       exclude: ['/*'],
     },
+    cookieOptions: {
+      maxAge: 60 * 60 * 8, // 8 hours
+      sameSite: 'lax',
+      secure: true
+    }
   },
 
-  compatibilityDate: '2024-11-16',
-  
   colorMode: {
     classSuffix: '',
     preference: 'dark',
-    fallback: 'dark'
+    fallback: 'dark',
+    dataValue: 'theme'
   },
 
   googleFonts: {

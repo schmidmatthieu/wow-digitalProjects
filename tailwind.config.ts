@@ -7,30 +7,41 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        cyber: ['Inter', 'sans-serif'],
       },
       colors: {
-        neon: {
-          pink: '#FF10F0',
-          blue: '#00FFF0',
-          purple: '#BD00FF',
-          yellow: '#FFE600'
-        },
         cyber: {
-          black: '#0A0A0A',
-          darker: '#141414',
-          dark: '#1A1A1A',
-          primary: '#00FFF0',
-          secondary: '#FF10F0',
-          accent: '#BD00FF'
+          black: {
+            DEFAULT: '#0A0A0A',
+            light: '#F5F5F5'
+          },
+          darker: {
+            DEFAULT: '#141414',
+            light: '#FFFFFF'
+          },
+          dark: {
+            DEFAULT: '#1A1A1A',
+            light: '#F8F8F8'
+          },
+          primary: {
+            DEFAULT: '#00FFF0',
+            light: '#4F46E5'
+          },
+          secondary: {
+            DEFAULT: '#FF10F0',
+            light: '#7C3AED'
+          },
+          accent: {
+            DEFAULT: '#BD00FF',
+            light: '#6366F1'
+          }
         }
       },
       backdropBlur: {
         xs: '2px',
       },
       boxShadow: {
-        neon: '0 0 10px rgba(0, 255, 240, 0.2)',
-        'neon-strong': '0 0 20px rgba(0, 255, 240, 0.3)',
+        neon: '0 0 15px rgba(79, 70, 229, 0.2)',
+        'neon-strong': '0 0 20px rgba(79, 70, 229, 0.3)',
       },
       transitionTimingFunction: {
         'cyber': 'cubic-bezier(0.2, 0.8, 0.2, 1)',

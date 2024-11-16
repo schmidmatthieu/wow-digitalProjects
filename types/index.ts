@@ -26,6 +26,5 @@ export interface Project {
 
 export interface ProjectFilters {
   status: string[]
-  type: string[]
   search: string
 }

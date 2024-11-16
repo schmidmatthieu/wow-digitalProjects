@@ -100,7 +100,7 @@
                       />
                     </template>
                     <template v-else>
-                      <PhotoIcon class="w-8 h-8 text-cyber-primary/40" />
+                      <vue-feather type="image" class="w-8 h-8 text-cyber-primary/40" />
                     </template>
                   </div>
                 </div>
@@ -135,41 +135,10 @@
         </div>
 
         <!-- Tech Stack -->
-        <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">Tech Stack</label>
-          <div class="flex flex-wrap gap-2">
-            <input
-              v-model="newTech"
-              @keydown.enter.prevent="addTech"
-              type="text"
-              placeholder="Add technology..."
-              class="px-4 py-2 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
-            />
-            <button
-              type="button"
-              @click="addTech"
-              class="px-4 py-2 rounded-lg bg-cyber-primary/10 text-cyber-primary border border-cyber-primary/20 hover:bg-cyber-primary/20"
-            >
-              Add
-            </button>
-          </div>
-          <div class="mt-2 flex flex-wrap gap-2">
-            <span
-              v-for="tech in techStack"
-              :key="tech"
-              class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-cyber-primary/10 text-cyber-primary border border-cyber-primary/20"
-            >
-              {{ tech }}
-              <button
-                type="button"
-                @click="removeTech(tech)"
-                class="ml-2 text-cyber-primary hover:text-cyber-primary/70"
-              >
-                ×
-              </button>
-            </span>
-          </div>
-        </div>
+        <TechStackInput
+          v-model="techStack"
+          :suggestions="availableTechnologies"
+        />
 
         <!-- Environments -->
         <div class="space-y-4">
@@ -187,7 +156,7 @@
                   class="mt-1 block w-full px-4 py-2 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
                 />
               </div>
-              <div>
+              <div v-if="env.type !== 'figma'">
                 <label :for="'backend-' + env.type" class="block text-xs text-gray-400">Backend URL</label>
                 <input
                   :id="'backend-' + env.type"
@@ -227,8 +196,6 @@
 </template>
 
 <script setup lang="ts">
-import { PhotoIcon } from '@heroicons/vue/24/outline'
-
 definePageMeta({
   middleware: ['auth']
 })
@@ -239,14 +206,15 @@ const { createEnvironment } = useProjectEnvironments()
 const { updateProjectTechStack } = useTechStack()
 const { fetchUserTeam } = useTeams()
 const { uploadThumbnail } = useStorage()
+const { fetchAllTechnologies } = useTechStack()
 
 const loading = ref(false)
 const error = ref('')
-const newTech = ref('')
 const techStack = ref<string[]>([])
 const thumbnailFile = ref<File | null>(null)
 const thumbnailPreview = ref<string | null>(null)
 const thumbnailType = ref<'url' | 'upload'>('url')
+const availableTechnologies = ref<string[]>([])
 
 const form = ref({
   name: '',
@@ -260,19 +228,9 @@ const form = ref({
 const environments = ref([
   { type: 'development', label: 'Development', frontend: '', backend: '' },
   { type: 'staging', label: 'Staging', frontend: '', backend: '' },
-  { type: 'production', label: 'Production', frontend: '', backend: '' }
+  { type: 'production', label: 'Production', frontend: '', backend: '' },
+  { type: 'figma', label: 'Figma', frontend: '', backend: '' }
 ])
-
-const addTech = () => {
-  if (newTech.value && !techStack.value.includes(newTech.value)) {
-    techStack.value.push(newTech.value)
-    newTech.value = ''
-  }
-}
-
-const removeTech = (tech: string) => {
-  techStack.value = techStack.value.filter(t => t !== tech)
-}
 
 const handleThumbnailChange = (event: Event) => {
   const input = event.target as HTMLInputElement
@@ -280,7 +238,7 @@ const handleThumbnailChange = (event: Event) => {
     const file = input.files[0]
     thumbnailFile.value = file
     thumbnailPreview.value = URL.createObjectURL(file)
-    form.value.thumbnail = '' // Clear URL when uploading file
+    form.value.thumbnail = ''
   }
 }
 
@@ -338,4 +296,13 @@ const handleSubmit = async () => {
     loading.value = false
   }
 }
+
+// Load technology suggestions
+onMounted(async () => {
+  try {
+    availableTechnologies.value = await fetchAllTechnologies()
+  } catch (e) {
+    console.error('Failed to load technology suggestions:', e)
+  }
+})
 </script>
