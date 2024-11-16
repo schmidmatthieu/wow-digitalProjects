@@ -1,12 +1,8 @@
 <template>
-  <div class="min-h-screen bg-cyber-black text-white">
+  <NuxtLayout>
     <NuxtLoadingIndicator color="#00FFF0" />
-    <main class="p-8">
-      <ClientOnly>
-        <NuxtPage />
-      </ClientOnly>
-    </main>
-  </div>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
 
 <style>

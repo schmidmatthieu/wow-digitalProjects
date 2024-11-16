@@ -30,6 +30,7 @@
           </button>
         </div>
         <NuxtLink
+          v-if="user"
           to="/projects/new"
           class="inline-flex items-center px-6 py-3 text-sm font-medium rounded-lg bg-cyber-primary text-cyber-black hover:bg-cyber-primary/90 transition-colors duration-200 shadow-neon"
         >
@@ -43,7 +44,16 @@
       <ProjectFilters v-model:filters="filters" />
     </div>
 
+    <div v-if="loading" class="text-center py-12">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyber-primary mx-auto"></div>
+    </div>
+
+    <div v-else-if="error" class="text-red-500 text-center py-12">
+      {{ error }}
+    </div>
+
     <div
+      v-else
       :class="[
         viewMode === 'grid' 
           ? 'grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5' 
@@ -61,11 +71,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { PlusIcon, Squares2X2Icon, ListBulletIcon } from '@heroicons/vue/24/outline'
 import type { Project, ProjectFilters as Filters } from '~/types'
 
+definePageMeta({
+  middleware: ['password']
+})
+
+const user = useSupabaseUser()
+const { fetchProjects } = useProjects()
+
 const viewMode = ref<'grid' | 'list'>('grid')
+const loading = ref(true)
+const error = ref('')
+const projects = ref<Project[]>([])
 
 const filters = ref<Filters>({
   status: [],
@@ -73,78 +93,11 @@ const filters = ref<Filters>({
   search: '',
 })
 
-// Example projects with all environments
-const projects = ref<Project[]>([
-  {
-    id: '1',
-    name: 'E-commerce Platform',
-    description: 'Modern e-commerce solution with advanced features and seamless user experience',
-    status: 'in_development',
-    type: 'frontend',
-    client: 'TechCorp',
-    thumbnail: 'https://picsum.photos/seed/1/800/400',
-    environments: {
-      development: {
-        frontend: 'https://dev.example.com',
-        backend: 'https://admin.dev.example.com',
-      },
-      staging: {
-        frontend: 'https://staging.example.com',
-        backend: 'https://admin.staging.example.com',
-      },
-      production: {
-        frontend: 'https://example.com',
-        backend: 'https://admin.example.com',
-      },
-      figma: 'https://figma.com/file/example',
-    },
-    techStack: ['Vue.js', 'Node.js', 'PostgreSQL'],
-  },
-  {
-    id: '2',
-    name: 'Analytics Dashboard',
-    description: 'Real-time analytics dashboard with advanced data visualization',
-    status: 'in_production',
-    type: 'frontend',
-    client: 'DataCorp',
-    thumbnail: 'https://picsum.photos/seed/2/800/400',
-    environments: {
-      development: {
-        frontend: 'https://dev.analytics.com',
-        backend: 'https://api.dev.analytics.com',
-      },
-      production: {
-        frontend: 'https://analytics.com',
-        backend: 'https://api.analytics.com',
-      },
-      figma: 'https://figma.com/file/analytics',
-    },
-    techStack: ['React', 'GraphQL', 'MongoDB'],
-  },
-  {
-    id: '3',
-    name: 'HR Management System',
-    description: 'Comprehensive HR management platform with employee tracking',
-    status: 'upcoming',
-    type: 'backend',
-    client: 'HR Solutions',
-    thumbnail: 'https://picsum.photos/seed/3/800/400',
-    environments: {
-      development: {
-        frontend: 'https://dev.hrms.com',
-        backend: 'https://api.dev.hrms.com',
-      },
-      figma: 'https://figma.com/file/hrms',
-    },
-    techStack: ['Angular', 'Java', 'Oracle'],
-  },
-])
-
 const filteredProjects = computed(() => {
   return projects.value.filter(project => {
     const matchesSearch = !filters.value.search || 
       project.name.toLowerCase().includes(filters.value.search.toLowerCase()) ||
-      project.client.toLowerCase().includes(filters.value.search.toLowerCase())
+      project.client?.toLowerCase().includes(filters.value.search.toLowerCase())
 
     const matchesStatus = !filters.value.status.length || 
       filters.value.status.includes(project.status)
@@ -154,5 +107,15 @@ const filteredProjects = computed(() => {
 
     return matchesSearch && matchesStatus && matchesType
   })
+})
+
+onMounted(async () => {
+  try {
+    projects.value = await fetchProjects()
+  } catch (e: any) {
+    error.value = e.message
+  } finally {
+    loading.value = false
+  }
 })
 </script>
