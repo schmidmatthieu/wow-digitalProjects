@@ -1,0 +1,92 @@
+{
+  "app": {
+    "name": "ProjectHub",
+    "tagline": "Manage your projects with ease"
+  },
+  "nav": {
+    "projects": "Projects",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": "Admin Login",
+    "logout": "Logout",
+    "email": "Email address",
+    "password": "Password",
+    "submit": "Sign in",
+    "errors": {
+      "invalid": "Invalid email or password",
+      "unconfirmed": "Please verify your email address"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "new": "New Project",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Are you sure you want to delete this project? This action cannot be undone.",
+    "form": {
+      "name": "Project Name",
+      "description": "Description",
+      "client": "Client",
+      "thumbnail": {
+        "label": "Thumbnail",
+        "url": "URL",
+        "upload": "Upload",
+        "remove": "Remove image",
+        "error": "Invalid image URL"
+      },
+      "status": {
+        "label": "Status",
+        "in_development": "In Development",
+        "in_maintenance": "In Maintenance",
+        "in_production": "In Production",
+        "upcoming": "Upcoming",
+        "archived": "Archived"
+      },
+      "tech_stack": {
+        "label": "Tech Stack",
+        "placeholder": "Add technology...",
+        "add": "Add"
+      },
+      "environments": {
+        "title": "Environments",
+        "development": "Development",
+        "staging": "Pre-production",
+        "production": "Production",
+        "figma": "Design",
+        "frontend": "Frontend",
+        "backend": "Backoffice",
+        "figma_discovery": "Figma Discovery"
+      },
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    }
+  },
+  "filters": {
+    "search": {
+      "label": "Search Projects",
+      "placeholder": "Search by name, client, technology..."
+    },
+    "status": {
+      "label": "Status",
+      "all": "All"
+    },
+    "sort": {
+      "label": "Sort by",
+      "status": "Status",
+      "created_at": "Creation Date",
+      "name": "Project Name",
+      "client": "Client Name",
+      "asc": "Ascending",
+      "desc": "Descending"
+    },
+    "active": "Active Filters",
+    "clear": "Clear all"
+  },
+  "empty": {
+    "title": "No projects found",
+    "description": "Create your first project to get started!",
+    "filtered": "No projects match your current filters."
+  }
+}

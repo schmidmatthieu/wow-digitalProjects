@@ -12,7 +12,7 @@
         class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 text-white hover:bg-cyber-primary/10 hover:shadow-neon"
       >
         <vue-feather type="grid" class="w-5 h-5 mr-3 text-cyber-primary" />
-        Projects
+        {{ $t('projects') }}
       </NuxtLink>
     </nav>
 
@@ -20,7 +20,7 @@
       <div class="flex items-center justify-between px-4 py-2">
         <div class="flex items-center gap-2">
           <ColorModeToggle />
-          
+          <LanguageSelector />
         </div>
         <ClientOnly>
           <template v-if="user">
@@ -29,7 +29,7 @@
               class="inline-flex items-center px-3 py-1.5 text-sm rounded-lg border border-cyber-primary/20 text-cyber-primary hover:bg-cyber-primary/10 transition-all duration-200"
             >
               <vue-feather type="log-out" class="w-4 h-4 mr-2" />
-              Logout
+              {{ $t('auth.logout') }}
             </button>
           </template>
           <template v-else>
@@ -38,16 +38,14 @@
               class="inline-flex items-center px-3 py-1.5 text-sm rounded-lg border border-cyber-primary/20 text-cyber-primary hover:bg-cyber-primary/10 transition-all duration-200"
             >
               <vue-feather type="user" class="w-4 h-4 mr-2" />
-              Admin
+              {{ $t('auth.login') }}
             </NuxtLink>
           </template>
         </ClientOnly>
       </div>
     </div>
-  </aside>
 
-  <!-- Noise texture overlay -->
-  <div class="noise"></div>
+  </aside>
 </template>
 
 <script setup lang="ts">

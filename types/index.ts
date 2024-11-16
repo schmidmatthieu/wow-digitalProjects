@@ -6,6 +6,7 @@ export interface Project {
   type: 'frontend' | 'backend' | 'figma'
   client: string
   thumbnail: string
+  created_at: string
   environments: {
     development?: {
       frontend?: string
@@ -27,4 +28,8 @@ export interface Project {
 export interface ProjectFilters {
   status: string[]
   search: string
+  sort: {
+    by: string
+    order: 'asc' | 'desc'
+  }
 }

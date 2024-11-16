@@ -1,12 +1,12 @@
 <template>
-  <div class="min-h-screen bg-cyber-black text-white">
+  <div class="min-h-screen text-white">
     <AppSidebar />
     <div class="lg:pl-64">
       <main class="p-8">
         <slot />
       </main>
     </div>
-    <div class="noise"></div>
+    <div></div>
   </div>
 </template>
 

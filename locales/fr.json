@@ -1,0 +1,92 @@
+{
+  "app": {
+    "name": "ProjectHub",
+    "tagline": "Gérez vos projets en toute simplicité"
+  },
+  "nav": {
+    "projects": "Projets",
+    "settings": "Paramètres"
+  },
+  "auth": {
+    "login": "Connexion admin",
+    "logout": "Déconnexion",
+    "email": "Adresse email",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "errors": {
+      "invalid": "Email ou mot de passe incorrect",
+      "unconfirmed": "Veuillez confirmer votre adresse email"
+    }
+  },
+  "projects": {
+    "title": "Projets",
+    "new": "Nouveau projet",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.",
+    "form": {
+      "name": "Nom du projet",
+      "description": "Description",
+      "client": "Client",
+      "thumbnail": {
+        "label": "Image",
+        "url": "URL",
+        "upload": "Télécharger",
+        "remove": "Supprimer l'image",
+        "error": "URL d'image invalide"
+      },
+      "status": {
+        "label": "Statut",
+        "in_development": "En développement",
+        "in_maintenance": "En maintenance",
+        "in_production": "En production",
+        "upcoming": "À venir",
+        "archived": "Archivé"
+      },
+      "tech_stack": {
+        "label": "Technologies",
+        "placeholder": "Ajouter une technologie...",
+        "add": "Ajouter"
+      },
+      "environments": {
+        "title": "Environnements",
+        "development": "Développement",
+        "staging": "Pré-production",
+        "production": "Production",
+        "figma": "Design",
+        "frontend": "Frontend",
+        "backend": "Backoffice",
+        "figma_discovery": "Figma Discovery"
+      },
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "cancel": "Annuler"
+    }
+  },
+  "filters": {
+    "search": {
+      "label": "Rechercher des projets",
+      "placeholder": "Rechercher par nom, client, technologie..."
+    },
+    "status": {
+      "label": "Statut",
+      "all": "Tous"
+    },
+    "sort": {
+      "label": "Trier par",
+      "status": "Statut",
+      "created_at": "Date de création",
+      "name": "Nom du projet",
+      "client": "Nom du client",
+      "asc": "Croissant",
+      "desc": "Décroissant"
+    },
+    "active": "Filtres actifs",
+    "clear": "Effacer tout"
+  },
+  "empty": {
+    "title": "Aucun projet trouvé",
+    "description": "Créez votre premier projet pour commencer !",
+    "filtered": "Aucun projet ne correspond à vos filtres actuels."
+  }
+}

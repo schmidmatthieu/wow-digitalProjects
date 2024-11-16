@@ -2,24 +2,29 @@
   <ClientOnly>
     <div 
       :class="[
-        'group bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/10 overflow-hidden transition-all duration-200 hover:border-cyber-primary/30 hover-glow',
-        viewMode === 'list' ? 'flex' : ''
+        'group bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/10 overflow-hidden transition-all duration-200 hover:border-cyber-primary/30 hover-glow flex',
+        viewMode === 'list' ? 'flex-row h-fit' : 'flex-col h-fit'
       ]"
     >
       <div 
         :class="[
           'relative overflow-hidden',
-          viewMode === 'list' ? 'w-64 flex-shrink-0' : 'aspect-w-16 aspect-h-9'
+          viewMode === 'list' ? 'w-[320px] h-full flex-shrink-0' : 'h-full'
         ]"
       >
+        <!-- Thumbnail -->
         <img
-          :src="project.thumbnail"
+          :src="project.thumbnail || '/placeholder-project.jpg'"
           :alt="project.name"
           class="object-cover w-full h-full transform transition-transform duration-700 group-hover:scale-105"
         />
-        <!-- Gradient overlay -->
-        <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/60 to-transparent backdrop-blur-[2px] pointer-events-none"></div>
         
+        <!-- Gradient overlay -->
+        <div class="absolute inset-x-0 top-0 h-32 pointer-events-none">
+          <div class="w-full h-full gradient-blur backdrop-blur-lg bg-black/40"></div>
+        </div>
+        
+        <!-- Status badge -->
         <div class="absolute top-3 right-3 z-10">
           <span
             class="status-badge inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-md shadow-lg"
@@ -28,6 +33,8 @@
             {{ formatStatus(project.status) }}
           </span>
         </div>
+
+        <!-- Edit button -->
         <div v-if="user" class="absolute top-3 left-3 z-10">
           <NuxtLink
             :to="`/projects/${project.id}/edit`"
@@ -38,62 +45,75 @@
           </NuxtLink>
         </div>
       </div>
+
+      <!-- Content -->
       <div 
         :class="[
-          viewMode === 'list' ? 'flex-1 flex flex-col' : '',
-          'p-6'
+          viewMode === 'list' ? 'flex-1 flex flex-col min-w-0 overflow-hidden' : '',
+          'p-6 flex flex-col flex-1'
         ]"
       >
-        <div :class="[viewMode === 'list' ? 'flex-1' : '']">
-          <h3 class="text-xl font-medium text-white transition-colors duration-200 group-hover:text-cyber-primary">
+        <!-- Project Info -->
+        <div class="flex-none">
+          <h3 class="text-xl font-medium text-white transition-colors duration-200 group-hover:text-cyber-primary truncate">
             {{ project.name }}
           </h3>
-          <p class="mt-2 text-sm text-gray-400">
+          <p class="mt-2 text-sm text-gray-400 line-clamp-2">
             {{ project.description }}
           </p>
           <div class="mt-4">
             <div class="flex items-center text-sm text-gray-400">
-              <vue-feather type="briefcase" class="w-4 h-4 mr-2 text-cyber-primary/70" />
-              {{ project.client }}
+              <vue-feather type="briefcase" class="w-4 h-4 mr-2 text-cyber-primary/70 flex-shrink-0" />
+              <span class="truncate">{{ project.client }}</span>
             </div>
           </div>
-
-          <!-- Environment Links -->
-          <div class="mt-6 space-y-4">
-            <template v-for="env in projectEnvironments" :key="env.type">
-              <div v-if="env.urls.length > 0" class="space-y-2">
-                <h4 class="text-sm font-medium" :class="envStyles[env.type].text">
-                  {{ env.label }}
-                </h4>
-                <div class="flex flex-wrap gap-2">
-                  <a
-                    v-for="url in env.urls"
-                    :key="url.type"
-                    :href="url.link"
-                    target="_blank"
-                    :class="[
-                      'inline-flex items-center px-3 py-1.5 text-sm rounded-md transition-all duration-200 transform hover:scale-105',
-                      envStyles[env.type].bg,
-                      envStyles[env.type].text,
-                      envStyles[env.type].hover
-                    ]"
-                  >
-                    <vue-feather :type="url.icon" class="w-4 h-4 mr-2" />
-                    {{ url.label }}
-                  </a>
-                </div>
-              </div>
-            </template>
-          </div>
         </div>
-
+        <!-- Environment Links -->
+        <div 
+          :class="[
+            'mt-6 flex-1  custom-scrollbar',
+            viewMode === 'list' ? 'grid grid-cols-2 lg:grid-cols-4 gap-6' : 'space-y-4'
+          ]"
+        >
+          <template v-for="env in projectEnvironments" :key="env.type">
+            <div 
+              v-if="env.urls.length > 0" 
+              :class="[
+                'space-y-2',
+                viewMode === 'list' ? 'min-w-[200px]' : ''
+              ]"
+            >
+              <h4 class="text-sm font-medium" :class="envStyles[env.type].text">
+                {{ env.label }}
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <a
+                  v-for="url in env.urls"
+                  :key="url.type"
+                  :href="url.link"
+                  target="_blank"
+                  :class="[
+                    'inline-flex items-center px-3 py-1.5 text-sm rounded-md transition-all duration-200 transform hover:scale-105 whitespace-nowrap',
+                    envStyles[env.type].bg,
+                    envStyles[env.type].text,
+                    envStyles[env.type].hover
+                  ]"
+                >
+                  <vue-feather :type="url.icon" class="w-4 h-4 mr-2" />
+                  {{ url.label }}
+                </a>
+              </div>
+            </div>
+          </template>
+        </div>
         <!-- Tech Stack -->
-        <div v-if="project.project_tech_stack?.length" class="mt-6">
+        <div v-if="project.project_tech_stack?.length" class="mt-6 pt-4 border-t border-cyber-primary/10 flex-none">
           <h4 class="text-sm font-medium text-gray-300 mb-2 flex items-center">
             <vue-feather type="code" class="w-4 h-4 mr-2 text-cyber-primary/70" />
             Technology
           </h4>
-          <div class="flex flex-wrap gap-2">          
+          <div class="flex flex-wrap gap-2">         
+
             <span
               v-for="tech in project.project_tech_stack"
               :key="tech.id"
@@ -108,6 +128,36 @@
     </div>
   </ClientOnly>
 </template>
+
+<style scoped>
+.gradient-blur {
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+}
+  
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 255, 240, 0.2) rgba(0, 255, 240, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 255, 240, 0.05);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 240, 0.2);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 240, 0.3);
+}
+</style>
 
 <script setup lang="ts">
 import type { Project } from '~/types'

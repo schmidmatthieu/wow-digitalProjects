@@ -6,29 +6,29 @@
       </h1>
       <div class="flex items-center gap-4">
         <div class="flex items-center bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20 p-1">
-          <button
-            @click="viewMode = 'grid'"
-            :class="[
-              'p-2 rounded transition-all duration-200',
-              viewMode === 'grid' 
-                ? 'bg-cyber-primary text-cyber-black shadow-neon' 
-                : 'text-gray-400 hover:text-cyber-primary'
-            ]"
-          >
-            <vue-feather type="grid" class="w-5 h-5" />
-          </button>
-          <button
-            @click="viewMode = 'list'"
-            :class="[
-              'p-2 rounded transition-all duration-200',
-              viewMode === 'list' 
-                ? 'bg-cyber-primary text-cyber-black shadow-neon' 
-                : 'text-gray-400 hover:text-cyber-primary'
-            ]"
-          >
-            <vue-feather type="list" class="w-5 h-5" />
-          </button>
-        </div>
+  <button
+    @click="viewMode = 'grid'"
+    :class="[
+      'p-2 rounded transition-all duration-200 flex items-center justify-center w-10 h-10', // Ajout de dimensions fixes et flexbox
+      viewMode === 'grid' 
+        ? 'bg-cyber-primary text-cyber-black shadow-neon' 
+        : 'text-gray-400 hover:text-cyber-primary'
+    ]"
+  >
+    <vue-feather type="grid" class="w-5 h-5" />
+  </button>
+  <button
+    @click="viewMode = 'list'"
+    :class="[
+      'p-2 rounded transition-all duration-200 flex items-center justify-center w-10 h-10', // Ajout de dimensions fixes et flexbox
+      viewMode === 'list' 
+        ? 'bg-cyber-primary text-cyber-black shadow-neon' 
+        : 'text-gray-400 hover:text-cyber-primary'
+    ]"
+  >
+    <vue-feather type="list" class="w-5 h-5" />
+  </button>
+</div>
         <NuxtLink
           v-if="user"
           to="/projects/new"
@@ -60,11 +60,11 @@
       :class="[
         viewMode === 'grid' 
           ? 'grid gap-8 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-[1600px] mx-auto' 
-          : 'space-y-6'
+          : 'flex flex-col gap-6'
       ]"
     >
       <ProjectCard
-        v-for="project in filteredProjects"
+        v-for="project in sortedProjects"
         :key="project.id"
         :project="project"
         :view-mode="viewMode"
@@ -73,7 +73,7 @@
 
     <!-- Empty state -->
     <div 
-      v-if="!loading && !error && filteredProjects.length === 0" 
+      v-if="!loading && !error && sortedProjects.length === 0" 
       class="text-center py-12"
     >
       <vue-feather 
@@ -99,8 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import type { Project, ProjectFilters as Filters } from '~/types'
+import type { Project } from '~/types'
 
 definePageMeta({
   middleware: ['password']
@@ -114,10 +113,23 @@ const loading = ref(true)
 const error = ref('')
 const projects = ref<Project[]>([])
 
-const filters = ref<Filters>({
+const filters = ref<ProjectFilters>({
   status: [],
   search: '',
+  sort: {
+    by: 'status',
+    order: 'asc'
+  }
 })
+
+// Status priority for sorting
+const STATUS_PRIORITY = {
+  in_development: 0,
+  in_maintenance: 1,
+  in_production: 2,
+  upcoming: 3,
+  archived: 4
+}
 
 const filteredProjects = computed(() => {
   return projects.value.filter(project => {
@@ -140,6 +152,35 @@ const filteredProjects = computed(() => {
 
     return matchesSearch && matchesStatus
   })
+})
+
+const sortedProjects = computed(() => {
+  const sorted = [...filteredProjects.value]
+  const { by, order } = filters.value.sort
+
+  sorted.sort((a, b) => {
+    let comparison = 0
+
+    switch (by) {
+      case 'status':
+        comparison = STATUS_PRIORITY[a.status as keyof typeof STATUS_PRIORITY] - 
+                    STATUS_PRIORITY[b.status as keyof typeof STATUS_PRIORITY]
+        break
+      case 'created_at':
+        comparison = new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        break
+      case 'name':
+        comparison = a.name.localeCompare(b.name)
+        break
+      case 'client':
+        comparison = (a.client || '').localeCompare(b.client || '')
+        break
+    }
+
+    return order === 'asc' ? comparison : -comparison
+  })
+
+  return sorted
 })
 
 onMounted(async () => {

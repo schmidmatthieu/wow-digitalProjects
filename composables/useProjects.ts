@@ -4,6 +4,15 @@ type Project = Database['public']['Tables']['projects']['Row']
 type ProjectInsert = Database['public']['Tables']['projects']['Insert']
 type ProjectUpdate = Database['public']['Tables']['projects']['Update']
 
+// Status priority order
+const STATUS_PRIORITY = {
+  in_development: 0,
+  in_maintenance: 1,
+  in_production: 2,
+  upcoming: 3,
+  archived: 4
+}
+
 export const useProjects = () => {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
@@ -19,7 +28,18 @@ export const useProjects = () => {
       .order('created_at', { ascending: false })
 
     if (error) throw error
-    return projects
+
+    // Sort projects by status priority and creation date
+    return projects.sort((a, b) => {
+      // First compare by status priority
+      const statusDiff = STATUS_PRIORITY[a.status as keyof typeof STATUS_PRIORITY] - 
+                        STATUS_PRIORITY[b.status as keyof typeof STATUS_PRIORITY]
+      
+      if (statusDiff !== 0) return statusDiff
+
+      // If status is the same, sort by creation date (newest first)
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    })
   }
 
   const getProject = async (id: string) => {
