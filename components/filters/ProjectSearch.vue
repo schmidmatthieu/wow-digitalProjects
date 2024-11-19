@@ -14,7 +14,7 @@
           v-model="searchQuery"
           type="text"
           class="block w-full pl-11 pr-4 py-3 rounded-lg bg-gray-300 dark:bg-cyber-darker border text-gray-600 dark:text-gray-300 placeholder-gray-600 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-cyber-secondary dark:focus:ring-cyber-primary focus:border-transparent"
-          placeholder="Search by project name, client, tech..."
+          placeholder="Recherche par nom de projet, client, tech..."
           @focus="onFocus"
           @blur="onBlur"
         />

@@ -24,11 +24,11 @@
 
 <script setup lang="ts">
 const statusOptions = [
-  { label: 'In Development', value: 'in_development', icon: 'code' },
-  { label: 'In Maintenance', value: 'in_maintenance', icon: 'tool' },
-  { label: 'In Production', value: 'in_production', icon: 'check-circle' },
-  { label: 'Upcoming', value: 'upcoming', icon: 'clock' },
-  { label: 'Archived', value: 'archived', icon: 'archive' }
+  { label: 'En Developpement', value: 'in_development', icon: 'code' },
+  { label: 'En Maintenance', value: 'in_maintenance', icon: 'tool' },
+  { label: 'En Production', value: 'in_production', icon: 'check-circle' },
+  { label: 'À venir', value: 'upcoming', icon: 'clock' },
+  { label: 'Archivé', value: 'archived', icon: 'archive' }
 ]
 
 const props = defineProps<{

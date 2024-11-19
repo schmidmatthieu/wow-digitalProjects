@@ -44,36 +44,7 @@ export const useTeams = () => {
     return team.id
   }
 
-  const fetchTeams = async () => {
-    const { data: teams, error } = await client
-      .from('teams')
-      .select(`
-        *,
-        team_members (*)
-      `)
-      .order('created_at', { ascending: false })
-
-    if (error) throw error
-    return teams
-  }
-
-  const getTeam = async (id: string) => {
-    const { data: team, error } = await client
-      .from('teams')
-      .select(`
-        *,
-        team_members (*)
-      `)
-      .eq('id', id)
-      .single()
-
-    if (error) throw error
-    return team
-  }
-
   return {
-    fetchUserTeam,
-    fetchTeams,
-    getTeam
+    fetchUserTeam
   }
 }

@@ -6,8 +6,8 @@
       :class="[
         'lg:hidden fixed z-[60] px-2 pt-2 rounded-lg transition-all duration-300',
         isOpen 
-          ? 'top-4 left-[190px] dark:bg-cyber-darker border dark:border-cyber-primary/20 border-cyber-secondary/20' 
-          : 'top-4 left-8 dark:bg-cyber-darker border dark:border-cyber-primary/20 border-cyber-secondary/20'
+          ? 'top-4 left-[190px] dark:bg-cyber-darker bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20' 
+          : 'top-4 left-8 dark:bg-cyber-darker bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20'
       ]"
     >
       <vue-feather 

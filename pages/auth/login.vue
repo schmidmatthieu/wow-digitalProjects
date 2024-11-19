@@ -20,7 +20,7 @@
               type="email"
               required
               class="appearance-none rounded-lg relative block w-full px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
-              placeholder="Email address"
+              placeholder="Adresse email"
             />
           </div>
           <div>
@@ -32,7 +32,7 @@
               type="password"
               required
               class="appearance-none rounded-lg relative block w-full px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
-              placeholder="Password"
+              placeholder="Mot de passe"
             />
           </div>
         </div>
@@ -46,7 +46,7 @@
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <LockClosedIcon class="h-5 w-5 dark:text-cyber-black text-white" aria-hidden="true" />
             </span>
-            {{ loading ? 'Signing in...' : 'Sign in' }}
+            {{ loading ? 'Login...' : 'Login' }}
           </button>
         </div>
 

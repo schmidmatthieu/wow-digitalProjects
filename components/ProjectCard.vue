@@ -16,7 +16,7 @@
         <img
           :src="project.thumbnail || 'https://projects.wow-digital.com/wp-content/uploads/2024/05/logo-wow-white.svg'"
           :alt="project.name"
-          class="object-cover w-full h-full transform transition-transform duration-700 group-hover:scale-105"
+          class="object-cover w-full h-[250px] transform transition-transform duration-700 group-hover:scale-105"
         />
         
         <!-- Gradient overlay -->

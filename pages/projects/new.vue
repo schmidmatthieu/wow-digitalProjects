@@ -40,8 +40,10 @@
           <div>
             <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Thumbnail</label>
             <div class="space-y-4">
-              <!-- Thumbnail Type Selection -->
+              <!--
+              
               <div class="flex space-x-4">
+                
                 <label class="inline-flex items-center">
                   <input
                     type="radio"
@@ -51,6 +53,7 @@
                   />
                   <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">URL</span>
                 </label>
+                
                 <label class="inline-flex items-center">
                   <input
                     type="radio"
@@ -61,6 +64,7 @@
                   <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">Upload</span>
                 </label>
               </div>
+                -->
 
               <!-- URL Input -->
               <div v-if="thumbnailType === 'url'" class="space-y-2">
@@ -83,13 +87,13 @@
               <!-- File Upload -->
               <div v-else class="space-y-2">
                 <div
-                  class="relative w-32 h-32 border-2 border-dashed rounded-lg dark:border-cyber-primary/20 border-cyber-secondary/20 dark:hover:border-cyber-primary/40 hover:border-cyber-secondary/40 transition-colors"
+                  class="relative w-32 h-32 border-2 border-dashed rounded-lg dark:border-cyber-primary/20 border-cyber-secondary/20 dark:hover:border-cyber-primary/40 hover:border-cyber-secondary/40 transition-colors cursor-pointer"
                   :class="{ 'border-solid': thumbnailPreview }"
                 >
                   <input
                     type="file"
                     accept="image/*"
-                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                     @change="handleThumbnailChange"
                   />
                   <div class="absolute inset-0 flex items-center justify-center">
@@ -101,7 +105,8 @@
                       />
                     </template>
                     <template v-else>
-                      <vue-feather type="image" class="w-8 h-8 dark:text-cyber-primary/40 text-cyber-secondary/40" />
+                      <vue-feather type="image" class="w-8 h-8 dark:text-cyber-primary/40 text-cyber-secondary/40 absolute top-4" />
+                      <span class="text-xs text-center mt-2 dark:text-gray-400 text-gray-600 absolute bottom-4">Cliquez ou déposez une image</span>
                     </template>
                   </div>
                 </div>
@@ -182,7 +187,7 @@
             :disabled="loading"
             class="px-6 py-3 rounded-lg dark:bg-cyber-primary bg-cyber-secondary text-gray-300 dark:text-gray-600 dark:hover:bg-cyber-primary/90 hover:bg-cyber-secondary/90 disabled:opacity-50"
           >
-            {{ loading ? 'Creating...' : 'Create Project' }}
+            {{ loading ? 'Ajout...' : 'Ajouter le projet' }}
           </button>
         </div>
 
@@ -200,7 +205,9 @@
 definePageMeta({
   middleware: ['auth']
 })
+
 const { supabase } = useSupabaseClient()
+const user = useSupabaseUser()
 const router = useRouter()
 const { createProject } = useProjects()
 const { createEnvironment } = useProjectEnvironments()
@@ -234,50 +241,20 @@ const environments = ref([
   { type: 'figma', label: 'Figma', frontend: '', backend: '' }
 ])
 
-
-const handleThumbnailChange = async (event: Event) => {
+const handleThumbnailChange = (event: Event) => {
   const input = event.target as HTMLInputElement
   if (input.files && input.files[0]) {
-    try {
-      const file = input.files[0]
-      
-      // Vérifier la taille du fichier (par exemple, limite de 2MB)
-      if (file.size > 2 * 1024 * 1024) {
-        error.value = "L'image ne doit pas dépasser 2MB"
-        return
-      }
-
-      // Créer un nom de fichier unique
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`
-      const filePath = `project-thumbnails/${fileName}`
-
-      // Afficher la prévisualisation
-      thumbnailFile.value = file
-      thumbnailPreview.value = URL.createObjectURL(file)
-      
-      // Upload vers Supabase Storage
-      const { error: uploadError, data } = await supabase.storage
-        .from('project-thumbnails') // Remplacez par le nom de votre bucket
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: false
-        })
-
-      if (uploadError) {
-        throw uploadError
-      }
-
-      // Obtenir l'URL publique
-      const { data: { publicUrl } } = supabase.storage
-        .from('project-thumbnails')
-        .getPublicUrl(filePath)
-
-      form.value.thumbnail = publicUrl
-    } catch (e: any) {
-      error.value = e.message || "Erreur lors de l'upload de l'image"
-      removeThumbnail()
+    const file = input.files[0]
+    
+    // Check file size (2MB limit)
+    if (file.size > 2 * 1024 * 1024) {
+      error.value = "L'image ne doit pas dépasser 2MB"
+      return
     }
+
+    // Display preview
+    thumbnailFile.value = file
+    thumbnailPreview.value = URL.createObjectURL(file)
   }
 }
 
@@ -290,7 +267,7 @@ const removeThumbnail = () => {
 
 const validateImageUrl = () => {
   if (form.value.thumbnail && form.value.thumbnail.trim() !== '') {
-    // Vérifie si l'URL est valide
+    // Verify URL validity
     try {
       new URL(form.value.thumbnail)
       validatedThumbnailUrl.value = form.value.thumbnail
@@ -310,8 +287,15 @@ const handleImageError = () => {
 
 const handleSubmit = async () => {
   try {
-    loading.value = true
-    error.value = ''
+  console.log('Auth status:', !!user.value)
+  try {
+    const session = await supabase?.auth?.getSession()
+    console.log('Auth session:', session)
+  } catch (sessionError) {
+    console.error('Session error:', sessionError)
+  }
+  loading.value = true
+  error.value = ''
 
     // Get user's team ID
     const teamId = await fetchUserTeam()

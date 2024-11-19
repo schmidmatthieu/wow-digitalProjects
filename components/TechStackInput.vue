@@ -11,7 +11,7 @@
       @keydown.down="navigateSuggestion(1)"
       @keydown.up="navigateSuggestion(-1)"
       type="text"
-      placeholder="Add technology..."
+      placeholder="Ajouter des technologies..."
       class="block w-full px-4 py-3 h-12 rounded-lg dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 text-gray-600 dark:text-gray-300 dark:placeholder-gray-400 placeholder-gray-600 focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
       @focus="showSuggestions = true"
       @blur="setTimeout(() => { showSuggestions = false }, 200)"
@@ -61,7 +61,7 @@
         <button
           type="button"
           @click="removeTech(tech)"
-          class="ml-2 dark:text-cyber-primary text-cyber-secondary dark:hover:text-cyber-primary/70 hover:text-cyber-secondary/70"
+          class="ml-2 dark:text-cyber-primary text-cyber-secondary dark:hover:text-cyber-primary/70 hover:text-cyber-secondary/70 flex items-center"
         >
           <vue-feather type="x" class="w-3 h-3" />
         </button>

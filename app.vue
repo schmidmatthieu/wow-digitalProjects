@@ -1,7 +1,7 @@
-<template>
-  <NuxtLayout>
+<template >
+  <NuxtLayout class="dark:bg-cyber-darker bg-gray-100">
     <NuxtLoadingIndicator color="#4F46E5" />
-    <NuxtPage />
+    <NuxtPage  />
   </NuxtLayout>
 </template>
 
@@ -35,10 +35,7 @@
 }
 
 /* Light mode styles */
-.light body {
-  background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%);
-  color: #1F2937;
-}
+
 
 .light .bg-cyber-darker {
   background: rgba(255, 255, 255, 0.9);
@@ -59,11 +56,7 @@
 }
 
 /* Dark mode styles */
-.dark body {
-  background: radial-gradient(circle at top right, rgba(0, 255, 240, 0.03), transparent 50%),
-             radial-gradient(circle at bottom left, rgba(189, 0, 255, 0.03), transparent 50%),
-             linear-gradient(to bottom, #0A0A0A, #141414);
-}
+
 
 .dark .bg-cyber-darker {
   background: rgba(20, 20, 20, 0.8);
