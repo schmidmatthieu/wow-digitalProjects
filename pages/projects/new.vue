@@ -1,44 +1,44 @@
 <template>
   <div class="max-w-4xl mx-auto">
-    <div class="bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20 p-8">
-      <h1 class="text-2xl font-bold text-white mb-8">Créer un nouveau projet</h1>
+    <div class="dark:bg-cyber-darker/80 bg-cyber-lighter/80 backdrop-blur-md rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 p-8">
+      <h1 class="text-2xl font-bold text-gray-600 dark:text-gray-300 mb-8">Créer un nouveau projet</h1>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
         <!-- Basic Information -->
         <div class="space-y-4">
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-300">Nom du projet</label>
+            <label for="name" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Nom du projet</label>
             <input
               id="name"
               v-model="form.name"
               type="text"
               required
-              class="mt-1 block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+              class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
             />
           </div>
 
           <div>
-            <label for="description" class="block text-sm font-medium text-gray-300">Description</label>
+            <label for="description" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Description</label>
             <textarea
               id="description"
               v-model="form.description"
               rows="3"
-              class="mt-1 block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+              class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
             ></textarea>
           </div>
 
           <div>
-            <label for="client" class="block text-sm font-medium text-gray-300">Client</label>
+            <label for="client" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Client</label>
             <input
               id="client"
               v-model="form.client"
               type="text"
-              class="mt-1 block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+              class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
             />
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Thumbnail</label>
+            <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Thumbnail</label>
             <div class="space-y-4">
               <!-- Thumbnail Type Selection -->
               <div class="flex space-x-4">
@@ -49,7 +49,7 @@
                     value="url"
                     class="form-radio text-cyber-primary"
                   />
-                  <span class="ml-2 text-sm text-gray-300">URL</span>
+                  <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">URL</span>
                 </label>
                 <label class="inline-flex items-center">
                   <input
@@ -58,7 +58,7 @@
                     value="upload"
                     class="form-radio text-cyber-primary"
                   />
-                  <span class="ml-2 text-sm text-gray-300">Upload</span>
+                  <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">Upload</span>
                 </label>
               </div>
 
@@ -68,11 +68,12 @@
                   v-model="form.thumbnail"
                   type="url"
                   placeholder="Enter image URL"
-                  class="block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+                  class="block w-full px-4 py-3 rounded-lg dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
+                  @blur="validateImageUrl"
                 />
                 <img
-                  v-if="form.thumbnail"
-                  :src="form.thumbnail"
+                  v-if="validatedThumbnailUrl"
+                  :src="validatedThumbnailUrl"
                   alt="Thumbnail preview"
                   class="h-32 w-32 object-cover rounded-lg"
                   @error="handleImageError"
@@ -82,7 +83,7 @@
               <!-- File Upload -->
               <div v-else class="space-y-2">
                 <div
-                  class="relative w-32 h-32 border-2 border-dashed rounded-lg border-cyber-primary/20 hover:border-cyber-primary/40 transition-colors"
+                  class="relative w-32 h-32 border-2 border-dashed rounded-lg dark:border-cyber-primary/20 border-cyber-secondary/20 dark:hover:border-cyber-primary/40 hover:border-cyber-secondary/40 transition-colors"
                   :class="{ 'border-solid': thumbnailPreview }"
                 >
                   <input
@@ -100,7 +101,7 @@
                       />
                     </template>
                     <template v-else>
-                      <vue-feather type="image" class="w-8 h-8 text-cyber-primary/40" />
+                      <vue-feather type="image" class="w-8 h-8 dark:text-cyber-primary/40 text-cyber-secondary/40" />
                     </template>
                   </div>
                 </div>
@@ -118,12 +119,12 @@
           </div>
 
           <div>
-            <label for="status" class="block text-sm font-medium text-gray-300">Statut</label>
+            <label for="status" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Statut</label>
             <select
               id="status"
               v-model="form.status"
               required
-              class="mt-1 block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+              class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
             >
               <option value="in_development">En Development</option>
               <option value="in_maintenance">En Maintenance</option>
@@ -142,27 +143,27 @@
 
         <!-- Environments -->
         <div class="space-y-4">
-          <h3 class="text-lg font-medium text-white">Environments</h3>
+          <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300">Environments</h3>
 
           <div v-for="env in environments" :key="env.type" class="space-y-2">
-            <h4 class="text-sm font-medium text-gray-300 capitalize">{{ env.label }}</h4>
+            <h4 class="text-sm font-medium text-gray-600 dark:text-gray-300 capitalize">{{ env.label }}</h4>
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label :for="'frontend-' + env.type" class="block text-xs text-gray-400">Frontend URL</label>
+                <label :for="'frontend-' + env.type" class="block text-xs text-gray-600 dark:text-gray-300">Frontend URL</label>
                 <input
                   :id="'frontend-' + env.type"
                   v-model="env.frontend"
                   type="url"
-                  class="mt-1 block w-full px-4 py-2 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+                  class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
                 />
               </div>
               <div v-if="env.type !== 'figma'">
-                <label :for="'backend-' + env.type" class="block text-xs text-gray-400">Backend URL</label>
+                <label :for="'backend-' + env.type" class="block text-xs text-gray-600 dark:text-gray-300">Backend URL</label>
                 <input
                   :id="'backend-' + env.type"
                   v-model="env.backend"
                   type="url"
-                  class="mt-1 block w-full px-4 py-2 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+                  class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
                 />
               </div>
             </div>
@@ -172,14 +173,14 @@
         <div class="flex justify-end space-x-4">
           <NuxtLink
             to="/"
-            class="px-6 py-3 rounded-lg border border-cyber-primary/20 text-cyber-primary hover:bg-cyber-primary/10"
+            class="px-6 py-3 rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 dark:text-cyber-primary text-cyber-secondary dark:hover:bg-cyber-primary/10 hover:bg-cyber-secondary/10"
           >
             Annuler
           </NuxtLink>
           <button
             type="submit"
             :disabled="loading"
-            class="px-6 py-3 rounded-lg bg-cyber-primary text-cyber-black hover:bg-cyber-primary/90 disabled:opacity-50"
+            class="px-6 py-3 rounded-lg dark:bg-cyber-primary bg-cyber-secondary text-gray-300 dark:text-gray-600 dark:hover:bg-cyber-primary/90 hover:bg-cyber-secondary/90 disabled:opacity-50"
           >
             {{ loading ? 'Creating...' : 'Create Project' }}
           </button>
@@ -199,7 +200,7 @@
 definePageMeta({
   middleware: ['auth']
 })
-
+const { supabase } = useSupabaseClient()
 const router = useRouter()
 const { createProject } = useProjects()
 const { createEnvironment } = useProjectEnvironments()
@@ -211,6 +212,7 @@ const { fetchAllTechnologies } = useTechStack()
 const loading = ref(false)
 const error = ref('')
 const techStack = ref<string[]>([])
+const validatedThumbnailUrl = ref('')
 const thumbnailFile = ref<File | null>(null)
 const thumbnailPreview = ref<string | null>(null)
 const thumbnailType = ref<'url' | 'upload'>('url')
@@ -232,13 +234,50 @@ const environments = ref([
   { type: 'figma', label: 'Figma', frontend: '', backend: '' }
 ])
 
-const handleThumbnailChange = (event: Event) => {
+
+const handleThumbnailChange = async (event: Event) => {
   const input = event.target as HTMLInputElement
   if (input.files && input.files[0]) {
-    const file = input.files[0]
-    thumbnailFile.value = file
-    thumbnailPreview.value = URL.createObjectURL(file)
-    form.value.thumbnail = ''
+    try {
+      const file = input.files[0]
+      
+      // Vérifier la taille du fichier (par exemple, limite de 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        error.value = "L'image ne doit pas dépasser 2MB"
+        return
+      }
+
+      // Créer un nom de fichier unique
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`
+      const filePath = `project-thumbnails/${fileName}`
+
+      // Afficher la prévisualisation
+      thumbnailFile.value = file
+      thumbnailPreview.value = URL.createObjectURL(file)
+      
+      // Upload vers Supabase Storage
+      const { error: uploadError, data } = await supabase.storage
+        .from('project-thumbnails') // Remplacez par le nom de votre bucket
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false
+        })
+
+      if (uploadError) {
+        throw uploadError
+      }
+
+      // Obtenir l'URL publique
+      const { data: { publicUrl } } = supabase.storage
+        .from('project-thumbnails')
+        .getPublicUrl(filePath)
+
+      form.value.thumbnail = publicUrl
+    } catch (e: any) {
+      error.value = e.message || "Erreur lors de l'upload de l'image"
+      removeThumbnail()
+    }
   }
 }
 
@@ -246,10 +285,26 @@ const removeThumbnail = () => {
   thumbnailFile.value = null
   thumbnailPreview.value = null
   form.value.thumbnail = ''
+  validatedThumbnailUrl.value = ''
+}
+
+const validateImageUrl = () => {
+  if (form.value.thumbnail && form.value.thumbnail.trim() !== '') {
+    // Vérifie si l'URL est valide
+    try {
+      new URL(form.value.thumbnail)
+      validatedThumbnailUrl.value = form.value.thumbnail
+    } catch {
+      handleImageError()
+    }
+  } else {
+    validatedThumbnailUrl.value = ''
+  }
 }
 
 const handleImageError = () => {
   form.value.thumbnail = ''
+  validatedThumbnailUrl.value = ''
   error.value = 'Invalid image URL. Please provide a valid image URL.'
 }
 

@@ -1,7 +1,7 @@
 <template>
   <button
     @click="toggleColorMode"
-    class="relative w-10 h-10 rounded-lg transition-all duration-300 flex items-center justify-center hover:bg-cyber-primary/10"
+    class="relative w-10 h-10 rounded-lg transition-all duration-300 flex items-center justify-center hover:bg-cyber-primary/10 border dark:border-cyber-primary/20 border-cyber-secondary/20"
     :title="colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
   >
     <Transition
@@ -11,7 +11,7 @@
       <component 
         :is="colorMode.value === 'dark' ? Sun : Moon"
         class="w-5 h-5"
-        :class="colorMode.value === 'dark' ? 'text-cyber-primary' : 'text-[#008F83]'"
+        :class="colorMode.value === 'dark' ? 'text-cyber-primary' : 'text-cyber-primary'"
       />
     </Transition>
   </button>

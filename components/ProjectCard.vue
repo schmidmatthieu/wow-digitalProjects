@@ -2,19 +2,19 @@
   <ClientOnly>
     <div 
       :class="[
-        'group bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/10 overflow-hidden transition-all duration-200 hover:border-cyber-primary/30 hover-glow flex',
+        'group bg-gray-200/80 dark:bg-cyber-darker/80 backdrop-blur-md rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 overflow-hidden transition-all duration-200 dark:hover:border-cyber-primary/50 hover:border-cyber-secondary/50 hover-glow flex',
         viewMode === 'list' ? 'flex-row h-fit' : 'flex-col h-fit'
       ]"
     >
       <div 
         :class="[
           'relative overflow-hidden',
-          viewMode === 'list' ? 'w-[320px] h-full flex-shrink-0' : 'h-full'
+          viewMode === 'list' ? 'w-[320px] h-full flex-shrink-0 min-h-36' : 'h-full min-h-36'
         ]"
       >
         <!-- Thumbnail -->
         <img
-          :src="project.thumbnail || '/placeholder-project.jpg'"
+          :src="project.thumbnail || 'https://projects.wow-digital.com/wp-content/uploads/2024/05/logo-wow-white.svg'"
           :alt="project.name"
           class="object-cover w-full h-full transform transition-transform duration-700 group-hover:scale-105"
         />
@@ -38,7 +38,7 @@
         <div v-if="user" class="absolute top-3 left-3 z-10">
           <NuxtLink
             :to="`/projects/${project.id}/edit`"
-            class="inline-flex items-center px-3 py-1.5 rounded-md bg-cyber-primary/20 text-cyber-primary text-xs font-medium backdrop-blur-md border border-cyber-primary/30 hover:bg-cyber-primary/30 transition-all duration-200 transform hover:scale-105 shadow-lg"
+            class="inline-flex items-center px-3 py-1.5 rounded-md dark:bg-cyber-primary/20 bg-cyber-secondary/20 text-white text-xs font-medium backdrop-blur-md border border-cyber-secondary/30 dark:border-cyber-primary/30 dark:hover:bg-cyber-primary/30 hover:bg-cyber-secondary/30 transition-all duration-200 transform hover:scale-105 shadow-lg"
           >
             <vue-feather type="edit-2" class="w-3 h-3 mr-1.5" />
             Editer
@@ -55,15 +55,15 @@
       >
         <!-- Project Info -->
         <div class="flex-none">
-          <h3 class="text-xl font-medium text-white transition-colors duration-200 group-hover:text-cyber-primary truncate">
+          <h3 class="text-xl font-medium text-black dark:text-white transition-colors duration-200 truncate">
             {{ project.name }}
           </h3>
-          <p class="mt-2 text-sm text-gray-400 line-clamp-2">
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
             {{ project.description }}
           </p>
           <div class="mt-4">
-            <div class="flex items-center text-sm text-gray-400">
-              <vue-feather type="briefcase" class="w-4 h-4 mr-2 text-cyber-primary/70 flex-shrink-0" />
+            <div class="flex items-center text-sm text-gray-600 dark:text-gray-300">
+              <vue-feather type="briefcase" class="w-4 h-4 mr-2 text-cyber-primary flex-shrink-0" />
               <span class="truncate">{{ project.client }}</span>
             </div>
           </div>
@@ -83,7 +83,7 @@
                 viewMode === 'list' ? 'min-w-[200px]' : ''
               ]"
             >
-              <h4 class="text-sm font-medium" :class="envStyles[env.type].text">
+              <h4 class="text-sm font-medium text-gray-600 dark:text-gray-300" :class="envStyles[env.type].text">
                 {{ env.label }}
               </h4>
               <div class="flex flex-wrap gap-2">
@@ -93,7 +93,7 @@
                   :href="url.link"
                   target="_blank"
                   :class="[
-                    'inline-flex items-center px-3 py-1.5 text-sm rounded-md transition-all duration-200 transform hover:scale-105 whitespace-nowrap',
+                    'inline-flex items-center px-3 py-1.5 text-sm border border-gray-300 rounded-md transition-all duration-200 transform hover:scale-105 whitespace-nowrap text-gray-600 dark:text-gray-300',
                     envStyles[env.type].bg,
                     envStyles[env.type].text,
                     envStyles[env.type].hover
@@ -108,8 +108,8 @@
         </div>
         <!-- Tech Stack -->
         <div v-if="project.project_tech_stack?.length" class="mt-6 pt-4 border-t border-cyber-primary/10 flex-none">
-          <h4 class="text-sm font-medium text-gray-300 mb-2 flex items-center">
-            <vue-feather type="code" class="w-4 h-4 mr-2 text-cyber-primary/70" />
+          <h4 class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2 flex items-center">
+            <vue-feather type="code" class="w-4 h-4 mr-2 text-cyber-primary" />
             Technologie
           </h4>
           <div class="flex flex-wrap gap-2">         
@@ -117,7 +117,7 @@
             <span
               v-for="tech in project.project_tech_stack"
               :key="tech.id"
-              class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-cyber-primary/5 text-cyber-primary/90 border border-cyber-primary/10 transition-all duration-200 hover:bg-cyber-primary/10 hover:border-cyber-primary/20"
+              class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-cyber-primary/5 text-cyber-primary border border-cyber-primary transition-all duration-200 hover:border-cyber-primary"
             >
               <vue-feather type="hash" class="w-3 h-3 mr-1" />
               {{ tech.technology }}

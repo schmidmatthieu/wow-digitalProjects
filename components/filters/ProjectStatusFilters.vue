@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="block text-sm font-medium text-gray-300 mb-2">
+    <label class="block text-sm font-medium dark:text-gray-300 text-gray-600 mb-2">
       Statut
     </label>
     <div class="flex flex-wrap gap-2">
@@ -11,8 +11,8 @@
         :class="[
           'inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
           modelValue.includes(status.value)
-            ? 'bg-cyber-primary text-cyber-black shadow-neon'
-            : 'bg-cyber-black/50 text-gray-300 border border-cyber-primary/20 hover:bg-cyber-primary/10'
+            ? 'bg-cyber-secondary dark:bg-cyber-primary text-gray-300 dark:text-gray-700 shadow-neon'
+            : 'bg-gray-200 dark:bg-cyber-dark dark:text-gray-300 text-gray-600 border dark:border-cyber-primary/20 border-cyber-secondary/20 dark:hover:bg-cyber-primary/10 hover:bg-cyber-secondary/10'
         ]"
       >
         <vue-feather :type="status.icon" class="w-4 h-4 mr-2" />

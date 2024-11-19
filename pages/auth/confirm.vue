@@ -1,10 +1,10 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-cyber-black">
-    <div class="max-w-md w-full p-8 bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20 text-center">
-      <h2 class="text-2xl font-bold text-white mb-4">
+    <div class="max-w-md w-full p-8 backdrop-blur-md rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 text-center">
+      <h2 class="text-2xl font-bold dark:text-white text-black mb-4">
         Confirmation de votre login...
       </h2>
-      <p class="text-gray-400">Veuillez patienter pendant que nous vérifions vos informations d'identification.</p>
+      <p class="dark:text-gray-400 text-gray-600">Veuillez patienter pendant que nous vérifions vos informations d'identification.</p>
     </div>
   </div>
 </template>

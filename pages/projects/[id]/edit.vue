@@ -1,13 +1,13 @@
 <template>
   <div class="max-w-4xl mx-auto">
     <div v-if="loading" class="text-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyber-primary mx-auto"></div>
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 dark:border-cyber-primary border-cyber-secondary mx-auto"></div>
     </div>
 
     <template v-else-if="project">
-      <div class="bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20 p-8">
+      <div class="dark:bg-cyber-darker/80 bg-cyber-lighter/80 backdrop-blur-md rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 p-8">
         <div class="flex justify-between items-center mb-8">
-          <h1 class="text-2xl font-bold text-white">Editer le projet</h1>
+          <h1 class="text-2xl font-bold text-gray-600 dark:text-gray-300">Editer le projet</h1>
           <button
             @click="handleDelete"
             class="px-4 py-2 text-sm rounded-lg border border-red-500/20 text-red-400 hover:bg-red-500/10"
@@ -21,123 +21,43 @@
           <!-- Basic Information -->
           <div class="space-y-4">
             <div>
-              <label for="name" class="block text-sm font-medium text-gray-300">Nom du projet</label>
+              <label for="name" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Nom du projet</label>
               <input
                 id="name"
                 v-model="form.name"
                 type="text"
                 required
-                class="mt-1 block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+                class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
               />
             </div>
 
             <div>
-              <label for="description" class="block text-sm font-medium text-gray-300">Description</label>
+              <label for="description" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Description</label>
               <textarea
                 id="description"
                 v-model="form.description"
                 rows="3"
-                class="mt-1 block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+                class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
               ></textarea>
             </div>
 
             <div>
-              <label for="client" class="block text-sm font-medium text-gray-300">Client</label>
+              <label for="client" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Client</label>
               <input
                 id="client"
                 v-model="form.client"
                 type="text"
-                class="mt-1 block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+                class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
               />
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-300 mb-2">Thumbnail</label>
-              <div class="space-y-4">
-                <!-- Thumbnail Type Selection -->
-                <div class="flex space-x-4">
-                  <label class="inline-flex items-center">
-                    <input
-                      type="radio"
-                      v-model="thumbnailType"
-                      value="url"
-                      class="form-radio text-cyber-primary"
-                    />
-                    <span class="ml-2 text-sm text-gray-300">URL</span>
-                  </label>
-                  <label class="inline-flex items-center">
-                    <input
-                      type="radio"
-                      v-model="thumbnailType"
-                      value="upload"
-                      class="form-radio text-cyber-primary"
-                    />
-                    <span class="ml-2 text-sm text-gray-300">Upload</span>
-                  </label>
-                </div>
-
-                <!-- URL Input -->
-                <div v-if="thumbnailType === 'url'" class="space-y-2">
-                  <input
-                    v-model="form.thumbnail"
-                    type="url"
-                    placeholder="Enter image URL"
-                    class="block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
-                  />
-                  <img
-                    v-if="form.thumbnail"
-                    :src="form.thumbnail"
-                    alt="Thumbnail preview"
-                    class="h-32 w-32 object-cover rounded-lg"
-                    @error="handleImageError"
-                  />
-                </div>
-
-                <!-- File Upload -->
-                <div v-else class="space-y-2">
-                  <div
-                    class="relative w-32 h-32 border-2 border-dashed rounded-lg border-cyber-primary/20 hover:border-cyber-primary/40 transition-colors"
-                    :class="{ 'border-solid': thumbnailPreview }"
-                  >
-                    <input
-                      type="file"
-                      accept="image/*"
-                      class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                      @change="handleThumbnailChange"
-                    />
-                    <div class="absolute inset-0 flex items-center justify-center">
-                      <template v-if="thumbnailPreview">
-                        <img
-                          :src="thumbnailPreview"
-                          alt="Thumbnail preview"
-                          class="w-full h-full object-cover rounded-lg"
-                        />
-                      </template>
-                      <template v-else>
-                        <vue-feather type="image" class="w-8 h-8 text-cyber-primary/40" />
-                      </template>
-                    </div>
-                  </div>
-                  <div v-if="thumbnailPreview" class="flex-1">
-                    <button
-                      type="button"
-                      @click="removeThumbnail"
-                      class="text-sm text-red-400 hover:text-red-300"
-                    >
-                      Effacer l'image
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <label for="status" class="block text-sm font-medium text-gray-300">Statut</label>
+              <label for="status" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Statut</label>
               <select
                 id="status"
                 v-model="form.status"
                 required
-                class="mt-1 block w-full px-4 py-3 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+                class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
               >
                 <option value="in_development">En Development</option>
                 <option value="in_maintenance">En Maintenance</option>
@@ -156,27 +76,27 @@
 
           <!-- Environments -->
           <div class="space-y-4">
-            <h3 class="text-lg font-medium text-white">Environments</h3>
+            <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300">Environments</h3>
 
             <div v-for="env in environments" :key="env.type" class="space-y-2">
-              <h4 class="text-sm font-medium text-gray-300 capitalize">{{ env.label }}</h4>
+              <h4 class="text-sm font-medium text-gray-600 dark:text-gray-300 capitalize">{{ env.label }}</h4>
               <div class="grid grid-cols-2 gap-4">
                 <div>
-                  <label :for="'frontend-' + env.type" class="block text-xs text-gray-400">Frontend URL</label>
+                  <label :for="'frontend-' + env.type" class="block text-xs text-gray-600 dark:text-gray-300">Frontend URL</label>
                   <input
                     :id="'frontend-' + env.type"
                     v-model="env.frontend"
                     type="url"
-                    class="mt-1 block w-full px-4 py-2 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+                    class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
                   />
                 </div>
                 <div v-if="env.type !== 'figma'">
-                  <label :for="'backend-' + env.type" class="block text-xs text-gray-400">Backend URL</label>
+                  <label :for="'backend-' + env.type" class="block text-xs text-gray-600 dark:text-gray-300">Backend URL</label>
                   <input
                     :id="'backend-' + env.type"
                     v-model="env.backend"
                     type="url"
-                    class="mt-1 block w-full px-4 py-2 rounded-lg bg-cyber-black/50 border border-cyber-primary/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+                    class="appearance-none rounded-lg relative block w-full mt-2 px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
                   />
                 </div>
               </div>
@@ -186,14 +106,14 @@
           <div class="flex justify-end space-x-4">
             <NuxtLink
               to="/"
-              class="px-6 py-3 rounded-lg border border-cyber-primary/20 text-cyber-primary hover:bg-cyber-primary/10"
+              class="px-6 py-3 rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 dark:text-cyber-primary text-cyber-secondary dark:hover:bg-cyber-primary/10 hover:bg-cyber-secondary/10"
             >
               Annuler
             </NuxtLink>
             <button
               type="submit"
               :disabled="saving"
-              class="px-6 py-3 rounded-lg bg-cyber-primary text-cyber-black hover:bg-cyber-primary/90 disabled:opacity-50"
+              class="px-6 py-3 rounded-lg dark:bg-cyber-primary bg-cyber-secondary text-gray-300 dark:text-gray-600 dark:hover:bg-cyber-primary/90 hover:bg-cyber-secondary/90 disabled:opacity-50"
             >
               {{ saving ? 'Saving...' : 'Save Changes' }}
             </button>

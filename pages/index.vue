@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div class="flex justify-between items-center mb-8">
-      <h1 class="text-3xl font-bold">
+    <div class="flex justify-between items-center mb-8 mt-16 lg:mt-0">
+      <h1 class="text-3xl font-bold text-black dark:text-white">
         <span class="text-cyber-primary">Project</span>Hub
       </h1>
       <div class="flex items-center gap-4">
-        <div class="flex items-center bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20 p-1">
+        <div class="flex items-center dark:bg-cyber-darker/80 backdrop-blur-md rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 p-1">
           <button
             @click="viewMode = 'grid'"
             :class="[
               'p-2 rounded transition-all duration-200 flex items-center justify-center w-10 h-10',
               viewMode === 'grid' 
-                ? 'bg-cyber-primary text-cyber-black shadow-neon' 
-                : 'text-gray-400 hover:text-cyber-primary'
+                ? 'dark:bg-cyber-primary bg-cyber-secondary text-gray-300 dark:text-gray-600 shadow-neon' 
+                : 'text-gray-600 dark:text-gray-400 dark:hover:text-cyber-primary hover:text-cyber-secondary'
             ]"
           >
             <vue-feather type="grid" class="w-5 h-5" />
@@ -22,8 +22,8 @@
             :class="[
               'p-2 rounded transition-all duration-200 flex items-center justify-center w-10 h-10',
               viewMode === 'list' 
-                ? 'bg-cyber-primary text-cyber-black shadow-neon' 
-                : 'text-gray-400 hover:text-cyber-primary'
+                ? 'dark:bg-cyber-primary bg-cyber-secondary text-gray-300 dark:text-gray-600 shadow-neon' 
+                : 'text-gray-600 dark:text-gray-400 dark:hover:text-cyber-primary hover:text-cyber-secondary'
             ]"
           >
             <vue-feather type="list" class="w-5 h-5" />
@@ -32,7 +32,7 @@
         <NuxtLink
           v-if="user"
           to="/projects/new"
-          class="inline-flex items-center px-6 py-3 text-sm font-medium rounded-lg bg-cyber-primary text-cyber-black hover:bg-cyber-primary/90 transition-colors duration-200 shadow-neon"
+          class="inline-flex items-center px-6 py-3 text-sm font-medium rounded-lg dark:bg-cyber-primary bg-cyber-secondary text-gray-300 dark:text-gray-600 dark:hover:bg-cyber-primary/90 hover:bg-cyber-secondary/90 transition-colors duration-200 shadow-neon"
         >
           <vue-feather type="plus" class="w-5 h-5 mr-2" />
           Nouveau Projet
@@ -48,7 +48,7 @@
     </div>
 
     <div v-if="loading" class="text-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyber-primary mx-auto"></div>
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 dark:border-cyber-primary border-cyber-secondary mx-auto"></div>
     </div>
 
     <div v-else-if="error" class="text-red-500 text-center py-12">
@@ -59,7 +59,7 @@
       v-else
       :class="[
         viewMode === 'grid' 
-          ? 'grid gap-8 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-[1600px] mx-auto' 
+          ? 'grid gap-8 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-auto' 
           : 'flex flex-col gap-6'
       ]"
     >
@@ -78,18 +78,18 @@
     >
       <vue-feather 
         type="inbox" 
-        class="w-16 h-16 mx-auto mb-4 text-gray-400"
+        class="w-16 h-16 mx-auto mb-4 dark:text-gray-400 text-gray-800"
       />
-      <h3 class="text-xl font-medium text-gray-300 mb-2">
+      <h3 class="text-xl font-medium dark:text-gray-300 text-gray-600 mb-2">
         Pas de projet trouvé
       </h3>
-      <p class="text-gray-400">
+      <p class="dark:text-gray-300 text-gray-600">
         {{ user ? 'Create your first project to get started!' : 'No projects match your current filters.' }}
       </p>
       <NuxtLink
         v-if="user"
         to="/projects/new"
-        class="inline-flex items-center px-6 py-3 mt-6 text-sm font-medium rounded-lg bg-cyber-primary text-cyber-black hover:bg-cyber-primary/90 transition-colors duration-200 shadow-neon"
+        class="inline-flex items-center px-6 py-3 mt-6 text-sm font-medium rounded-lg bg-cyber-primary text-gray-300 dark:text-gray-600 dark:hover:bg-cyber-primary/90 hover:bg-cyber-secondary/90 transition-colors duration-200 shadow-neon"
       >
         <vue-feather type="plus" class="w-5 h-5 mr-2" />
         Créer un projet

@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-cyber-black">
-    <div class="max-w-md w-full space-y-8 p-8 bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20">
+  <div class="min-h-screen flex items-center justify-center ">
+    <div class="max-w-md w-full space-y-8 p-8 dark:bg-cyber-darker/80 bg-cyber-lighter/80 backdrop-blur-md rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20">
       <div>
-        <h2 class="mt-6 text-center text-3xl font-bold text-white">
+        <h2 class="mt-6 text-center text-3xl font-bold text-gray-600 dark:text-gray-300">
           Connexion de l'administrateur
         </h2>
-        <p class="mt-2 text-center text-sm text-gray-400">
+        <p class="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
           Connectez-vous avec vos identifiants d'administrateur pour gérer les projets.
         </p>
       </div>
@@ -19,7 +19,7 @@
               name="email"
               type="email"
               required
-              class="appearance-none rounded-lg relative block w-full px-4 py-3 bg-cyber-black/50 border border-cyber-primary/20 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+              class="appearance-none rounded-lg relative block w-full px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
               placeholder="Email address"
             />
           </div>
@@ -31,7 +31,7 @@
               name="password"
               type="password"
               required
-              class="appearance-none rounded-lg relative block w-full px-4 py-3 bg-cyber-black/50 border border-cyber-primary/20 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
+              class="appearance-none rounded-lg relative block w-full px-4 py-3 dark:bg-cyber-black/50 bg-gray-200 border dark:border-cyber-primary/20 border-cyber-secondary/20 placeholder-gray-400 dark:text-white text-black focus:outline-none focus:ring-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary focus:border-transparent"
               placeholder="Password"
             />
           </div>
@@ -40,11 +40,11 @@
         <div>
           <button
             type="submit"
-            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-cyber-black bg-cyber-primary hover:bg-cyber-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyber-primary"
+            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg dark:text-cyber-black text-white dark:bg-cyber-primary bg-cyber-secondary dark:hover:bg-cyber-primary/90 hover:bg-cyber-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-cyber-primary focus:ring-cyber-secondary"
             :disabled="loading"
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <LockClosedIcon class="h-5 w-5 text-cyber-black" aria-hidden="true" />
+              <LockClosedIcon class="h-5 w-5 dark:text-cyber-black text-white" aria-hidden="true" />
             </span>
             {{ loading ? 'Signing in...' : 'Sign in' }}
           </button>

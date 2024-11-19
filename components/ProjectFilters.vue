@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-cyber-darker/80 backdrop-blur-md rounded-lg border border-cyber-primary/20 p-6">
+  <div class="bg-gray-200/80 dark:bg-cyber-darker/80 backdrop-blur-md rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 p-6">
     <div class="space-y-6">
       <!-- Search with Suggestions -->
       <div class="relative">

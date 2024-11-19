@@ -1,10 +1,10 @@
 <template>
-  <div v-if="hasActiveFilters" class="border-t border-cyber-primary/10 pt-4">
+  <div v-if="hasActiveFilters" class="border-t border-cyber-secondary/10 dark:border-cyber-primary/10 pt-4">
     <div class="flex items-center justify-between mb-2">
       <span class="text-sm text-gray-400">Activer les filtres</span>
       <button
         @click="$emit('clear')"
-        class="text-sm text-cyber-primary hover:text-cyber-primary/80 flex items-center"
+        class="text-sm text-cyber-primary dark:hover:text-cyber-primary/80 hover:text-cyber-secondary/80 flex items-center"
       >
         <vue-feather type="x" class="w-3 h-3 mr-1" />
         Tout effacer
@@ -14,13 +14,13 @@
       <span
         v-for="filter in activeFilters"
         :key="filter.id"
-        class="inline-flex items-center px-2 py-1 rounded-md text-xs bg-cyber-primary/10 text-cyber-primary border border-cyber-primary/20"
+        class="inline-flex items-center px-2 py-1 rounded-md text-xs dark:bg-cyber-primary/10 bg-cyber-secondary/10 text-cyber-primary border dark:border-cyber-primary/20 border-cyber-secondary/20"
       >
         <vue-feather :type="filter.icon" class="w-3 h-3 mr-1" />
         {{ filter.label }}
         <button
           @click="$emit('remove', filter)"
-          class="ml-1 hover:text-cyber-primary/70"
+          class="ml-1 hover:text-cyber-secondary/70 dark:hover:text-cyber-primary/70"
         >
           <vue-feather type="x" class="w-3 h-3" />
         </button>

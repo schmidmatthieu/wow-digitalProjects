@@ -16,7 +16,11 @@ export default {
           },
           darker: {
             DEFAULT: '#141414',
-            light: '#FFFFFF'
+            light: '#cfcfcf'
+          },
+          lighter: {
+            DEFAULT: '#cfcfcf',
+            light: '#cfcfcf'
           },
           dark: {
             DEFAULT: '#1A1A1A',
@@ -27,8 +31,8 @@ export default {
             light: '#4F46E5'
           },
           secondary: {
-            DEFAULT: '#FF10F0',
-            light: '#7C3AED'
+            DEFAULT: '#4F46E5',
+            light: '#4F46E5'
           },
           accent: {
             DEFAULT: '#BD00FF',
