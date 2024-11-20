@@ -56,7 +56,10 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'node',
-    serveStatic: true
+    serveStatic: true,
+    output: {
+      dir: 'dist'
+    }
   },
 
   devtools: {
