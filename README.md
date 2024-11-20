@@ -1,42 +1,36 @@
 # Nuxt 3 Minimal Starter
+Look at the Nuxt 3 documentation to learn more.
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Edit the .env
+
+Add the following var :
+
+SUPABASE_URL=[yourSupabaseURL]
+
+SUPABASE_KEY=[yourSupabaseAPIkey]
+
+### Only if you need a bucket
+
+SUPABASE_STORAGE_BUCKET={bucket_name} 
 
 ## Setup
-
 Make sure to install the dependencies:
 
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
-```
+### npm
+`npm install`
 
 ## Development Server
-
 Start the development server on http://localhost:3000
 
-```bash
-npm run dev
-```
+`npm run dev`
 
 ## Production
-
 Build the application for production:
 
-```bash
-npm run build
-```
+`npm run build`
 
 Locally preview production build:
 
-```bash
-npm run preview
-```
+`npm run start`
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Check out the deployment documentation for more information.
