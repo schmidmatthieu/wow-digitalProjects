@@ -35,7 +35,7 @@
         </div>
 
         <!-- Edit button -->
-        <div v-if="user" class="absolute top-3 left-3 z-10">
+        <div v-if="user && hasPasswordAccess" class="absolute top-3 left-3 z-10">
           <NuxtLink
             :to="`/projects/${project.id}/edit`"
             class="inline-flex items-center px-3 py-1.5 rounded-md dark:bg-cyber-primary/20 bg-cyber-secondary/20 text-white text-xs font-medium backdrop-blur-md border border-cyber-secondary/30 dark:border-cyber-primary/30 dark:hover:bg-cyber-primary/30 hover:bg-cyber-secondary/30 transition-all duration-200 transform hover:scale-105 shadow-lg"
@@ -113,7 +113,6 @@
             Technologie
           </h4>
           <div class="flex flex-wrap gap-2">         
-
             <span
               v-for="tech in project.project_tech_stack"
               :key="tech.id"
@@ -168,6 +167,12 @@ const props = defineProps<{
 }>()
 
 const user = useSupabaseUser()
+const hasPasswordAccess = ref(false)
+
+// Check if user has password access
+onMounted(() => {
+  hasPasswordAccess.value = localStorage.getItem('app-access') === 'granted'
+})
 
 const statusClasses = {
   in_development: 'bg-neon-yellow/5 text-neon-yellow/90 border border-neon-yellow/20',

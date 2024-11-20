@@ -30,7 +30,7 @@
           </button>
         </div>
         <NuxtLink
-          v-if="user"
+          v-if="user && hasPasswordAccess"
           to="/projects/new"
           class="inline-flex items-center px-6 py-3 text-sm font-medium rounded-lg dark:bg-cyber-primary bg-cyber-secondary text-gray-300 dark:text-gray-600 dark:hover:bg-cyber-primary/90 hover:bg-cyber-secondary/90 transition-colors duration-200 shadow-neon"
         >
@@ -87,7 +87,7 @@
         {{ user ? 'Create your first project to get started!' : 'No projects match your current filters.' }}
       </p>
       <NuxtLink
-        v-if="user"
+        v-if="user && hasPasswordAccess"
         to="/projects/new"
         class="inline-flex items-center px-6 py-3 mt-6 text-sm font-medium rounded-lg bg-cyber-primary text-gray-300 dark:text-gray-600 dark:hover:bg-cyber-primary/90 hover:bg-cyber-secondary/90 transition-colors duration-200 shadow-neon"
       >
@@ -102,7 +102,7 @@
 import type { Project } from '~/types'
 
 definePageMeta({
-  middleware: ['password']
+  middleware: ['auth']
 })
 
 const user = useSupabaseUser()
@@ -112,6 +112,7 @@ const viewMode = ref<'grid' | 'list'>('grid')
 const loading = ref(true)
 const error = ref('')
 const projects = ref<Project[]>([])
+const hasPasswordAccess = ref(false)
 
 const filters = ref<ProjectFilters>({
   status: [],
@@ -181,6 +182,11 @@ const sortedProjects = computed(() => {
   })
 
   return sorted
+})
+
+// Check if user has password access
+onMounted(() => {
+  hasPasswordAccess.value = localStorage.getItem('app-access') === 'granted'
 })
 
 onMounted(async () => {

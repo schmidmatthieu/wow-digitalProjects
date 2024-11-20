@@ -19,7 +19,7 @@
             type="password"
             required
             class="appearance-none rounded-lg relative block w-full px-4 py-3 bg-cyber-black/50 border border-cyber-primary/20 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyber-primary focus:border-transparent"
-            placeholder="Enter access password"
+            placeholder="Entrer le mot de passe"
           />
         </div>
 
@@ -29,7 +29,7 @@
             class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-cyber-black bg-cyber-primary hover:bg-cyber-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyber-primary"
             :disabled="loading"
           >
-            {{ loading ? 'Verifying...' : 'Access Application' }}
+            {{ loading ? 'Vérification...' : 'Entrer' }}
           </button>
         </div>
 

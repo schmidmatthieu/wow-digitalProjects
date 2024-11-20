@@ -1,26 +1,31 @@
+// middleware/auth.ts
 export default defineNuxtRouteMiddleware(async (to) => {
-  const user = useSupabaseUser()
-  const client = useSupabaseClient()
-
-  // Skip auth check for login and callback pages
-  if (to.path === '/auth/login' || to.path === '/auth/confirm' || to.path === '/password') {
-    // If user is already logged in, redirect to home
-    if (user.value) {
-      return navigateTo('/')
-    }
+  // Routes publiques qui ne nécessitent aucune vérification
+  const publicRoutes = ['/password', '/auth/login', '/auth/confirm']
+  if (publicRoutes.includes(to.path)) {
     return
   }
 
-  // If no user, try to refresh the session
-  if (!user.value) {
-    const { data: { session }, error } = await client.auth.getSession()
-    if (error || !session) {
-      return navigateTo('/auth/login')
+  // Vérification du mot de passe global
+  if (process.client) {
+    const hasAccess = localStorage.getItem('app-access') === 'granted'
+    if (!hasAccess) {
+      return navigateTo('/password')
     }
   }
 
-  // Redirect to login if still not authenticated
-  if (!user.value) {
-    return navigateTo('/auth/login')
+  // Routes qui nécessitent une authentification Supabase
+  const protectedRoutes = ['/projects/new', '/projects/edit']
+  const requiresAuth = protectedRoutes.some(route => to.path.includes(route))
+
+  if (requiresAuth) {
+    const user = useSupabaseUser()
+    if (!user.value) {
+      const client = useSupabaseClient()
+      const { data: { session }, error } = await client.auth.getSession()
+      if (error || !session) {
+        return navigateTo('/auth/login')
+      }
+    }
   }
 })

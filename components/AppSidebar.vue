@@ -54,23 +54,25 @@
         <div class="flex items-center justify-between px-4 py-2">
           <ColorModeToggle />
           <ClientOnly>
-            <template v-if="user">
-              <button
-                @click="handleLogout"
-                class="inline-flex items-center h-10 px-3 py-1.5 text-sm rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 text-cyber-primary hover:bg-cyber-primary/10 transition-all duration-200"
-              >
-                <vue-feather type="log-out" class="w-4 h-4 mr-2" />
-                Logout
-              </button>
-            </template>
-            <template v-else>
-              <NuxtLink
-                to="/auth/login"
-                class="inline-flex items-center h-10 px-3 py-1.5 text-sm rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 text-cyber-primary hover:bg-cyber-primary/10 transition-all duration-200"
-              >
-                <vue-feather type="user" class="w-4 h-4 mr-2" />
-                Login
-              </NuxtLink>
+            <template v-if="hasAccess">
+              <template v-if="user">
+                <button
+                  @click="handleLogout"
+                  class="inline-flex items-center h-10 px-3 py-1.5 text-sm rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 text-cyber-primary hover:bg-cyber-primary/10 transition-all duration-200"
+                >
+                  <vue-feather type="log-out" class="w-4 h-4 mr-2" />
+                  Logout
+                </button>
+              </template>
+              <template v-else>
+                <NuxtLink
+                  to="/auth/login"
+                  class="inline-flex items-center h-10 px-3 py-1.5 text-sm rounded-lg border dark:border-cyber-primary/20 border-cyber-secondary/20 text-cyber-primary hover:bg-cyber-primary/10 transition-all duration-200"
+                >
+                  <vue-feather type="user" class="w-4 h-4 mr-2" />
+                  Login
+                </NuxtLink>
+              </template>
             </template>
           </ClientOnly>
         </div>
@@ -85,14 +87,24 @@ const client = useSupabaseClient()
 const user = useSupabaseUser()
 const colorMode = useColorMode()
 const isOpen = ref(false)
+const hasAccess = ref(false)
+
+// Check if user has password access
+const checkAccess = () => {
+  hasAccess.value = localStorage.getItem('app-access') === 'granted'
+}
+
+// Initial check
+onMounted(checkAccess)
+
+// Watch for route changes to recheck access
+watch(() => router.currentRoute.value.path, () => {
+  isOpen.value = false
+  checkAccess()
+})
 
 const handleLogout = async () => {
   await client.auth.signOut()
   router.push('/')
 }
-
-// Close sidebar when route changes on mobile
-watch(() => router.currentRoute.value.path, () => {
-  isOpen.value = false
-})
 </script>
